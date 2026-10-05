@@ -91,7 +91,12 @@
     <main id="main">
 
         <!-- 1. OPENING -->
-        <section class="opening" aria-label="Introduction">
+        <section class="opening theme-dark" aria-label="Introduction">
+            <div class="hud" aria-hidden="true">
+                <span>Est. 2024</span>
+                <span>Working globally</span>
+                <span>19.4517° N, 70.6970° W</span>
+            </div>
             <div class="opening__content">
                 <h1 class="opening__wordmark">
                     <span class="sr-only">AKAI</span>
@@ -103,7 +108,6 @@
                     <span class="opening__line" data-delay="3">STUDIO.</span>
                 </div>
             </div>
-            <div class="opening__rule" aria-hidden="true"></div>
             <div class="opening__scroll" aria-hidden="true">
                 <span class="opening__scroll-text">Scroll</span>
                 <span class="opening__scroll-line"></span>
@@ -112,9 +116,9 @@
 
         <!-- 2. SELECTED WORK — the work comes first; it is the argument -->
         <section class="work" id="work" aria-labelledby="work-title">
-            <div class="work__header">
-                <h2 class="meta-label" id="work-title"><span class="section-index" aria-hidden="true">/01</span> SELECTED WORK</h2>
-                <span class="work__rule" aria-hidden="true"></span>
+            <div class="section-head">
+                <h2 class="section-title" id="work-title">SELECTED WORK</h2>
+                <span class="section-index" aria-hidden="true">/01</span>
             </div>
 
             <ul class="work__list" role="list">
@@ -199,10 +203,11 @@
 
         <!-- 4. DISCIPLINES — four capabilities, each pointing at the work that proves it (when there is some) -->
         <section class="disciplines" aria-labelledby="disciplines-title">
-            <div class="disciplines__header">
-                <h2 class="meta-label" id="disciplines-title"><span class="section-index" aria-hidden="true">/02</span> WHAT WE DO</h2>
-                <p class="disciplines__intro reveal">We move between disciplines depending on the problem. Most projects need two or three of them; few need all four.</p>
+            <div class="section-head">
+                <h2 class="section-title" id="disciplines-title">WHAT WE DO</h2>
+                <span class="section-index" aria-hidden="true">/02</span>
             </div>
+            <p class="disciplines__intro reveal">We move between disciplines depending on the problem. Most projects need two or three of them; few need all four.</p>
             <ol class="disciplines__list" role="list">
                 <li class="discipline reveal">
                     <span class="discipline__num meta-label">01</span>
@@ -244,8 +249,9 @@
 
         <!-- 5. THE AKAI METHOD — each step says what actually happens -->
         <section class="method" aria-labelledby="method-title">
-            <div class="method__header">
-                <h2 class="meta-label" id="method-title"><span class="section-index" aria-hidden="true">/03</span> THE AKAI METHOD</h2>
+            <div class="section-head">
+                <h2 class="section-title" id="method-title">THE AKAI METHOD</h2>
+                <span class="section-index" aria-hidden="true">/03</span>
             </div>
             <ol class="method__steps" role="list">
                 <li class="method__step reveal">
@@ -311,11 +317,31 @@
         </section>
 
         <!-- 7. CONTACT — a guided brief instead of a blank page -->
-        <section class="contact" id="contact" aria-labelledby="contact-title">
-            <h2 class="contact__headline reveal" id="contact-title">
-                <span class="contact__line">HAVE SOMETHING</span>
-                <span class="contact__line">WORTH BUILDING?</span>
-            </h2>
+        <section class="contact theme-dark" id="contact" aria-labelledby="contact-title">
+            <div class="contact__top">
+                <h2 class="contact__headline reveal" id="contact-title">
+                    <span class="contact__line">HAVE SOMETHING</span>
+                    <span class="contact__line">WORTH BUILDING?</span>
+                </h2>
+                <p class="contact__mark" aria-hidden="true">AKAI © 2026</p>
+            </div>
+
+            <div class="contact__info reveal">
+                <div>
+                    <span class="meta-label">STUDIO</span>
+                    <p>Creative Intelligence Studio</p>
+                </div>
+                <div>
+                    <span class="meta-label">LOCATION</span>
+                    <p>Santiago, Dominican Republic. Working globally.</p>
+                </div>
+                <div>
+                    <span class="meta-label">EMAIL</span>
+                    <p><a href="mailto:hello@akai.do" class="contact__email">hello@akai.do</a></p>
+                </div>
+            </div>
+
+            <div class="contact__body">
             <p class="contact__intro reveal">Answer a few quick questions and your email app opens with the brief already written.</p>
 
             <!-- Without JS the browser hands the form to the mail client; with JS, app.js composes a readable email.
@@ -358,8 +384,7 @@
                 </button>
                 <p class="brief__status" id="brief-status" role="status" aria-live="polite"></p>
             </form>
-
-            <p class="contact__alt reveal">Prefer to write directly? <a href="mailto:hello@akai.do" class="contact__email">hello@akai.do</a></p>
+            </div>
         </section>
 
     </main>

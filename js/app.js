@@ -491,7 +491,26 @@ document.addEventListener('DOMContentLoaded', () => {
         layout();
     };
 
+    // Inverts the fixed nav while a dark section is under it
+    const initNavTheme = () => {
+        const nav = document.getElementById('nav');
+        const darkAreas = document.querySelectorAll('.theme-dark, .footer');
+        if (!nav || !darkAreas.length || !('IntersectionObserver' in window)) return;
+
+        const under = new Set();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) under.add(entry.target);
+                else under.delete(entry.target);
+            });
+            nav.classList.toggle('on-dark', under.size > 0);
+        }, { rootMargin: '-4% 0px -94% 0px' });
+
+        darkAreas.forEach((area) => observer.observe(area));
+    };
+
     // --- Initialization ---
+    initNavTheme();
     initActiveSection();
     initLocalTime();
     initMobileMenu();
