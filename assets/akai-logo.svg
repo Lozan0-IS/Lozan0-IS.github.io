@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+  <style>
+    .wordmark {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      fill: #FFFFFF;
+      letter-spacing: -1px;
+    }
+    .tagline {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 7px;
+      fill: #FFFFFF;
+      letter-spacing: 0.3em;
+    }
+  </style>
+  <text x="50%" y="32" text-anchor="middle" class="wordmark">AKAI</text>
+  <text x="50%" y="46" text-anchor="middle" class="tagline">DIGITAL INTELLIGENCE</text>
+</svg>
