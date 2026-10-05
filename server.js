@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
-  // Folder URLs (/work/jalip/) serve that folder's index.html
+  // Folder URLs (/notes/idea-before-stack/) serve that folder's index.html
   if (reqUrl.endsWith('/')) reqUrl += 'index.html';
   const safePath = path.normalize(reqUrl).replace(/^(\.\.(\/|\\|$))+/, '');
   let filePath = path.join(__dirname, safePath);

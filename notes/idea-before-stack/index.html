@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://akai.do/notes/idea-before-stack/">
     <meta property="og:site_name" content="AKAI">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#F2F0EB">
+    <meta name="theme-color" content="#000000">
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="preload" href="/assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="/css/styles.css">
@@ -23,39 +23,11 @@
     <a href="#main" class="skip-link">Skip to main content</a>
 
     <header class="nav" id="nav">
-        <nav class="pill-nav" aria-label="Main navigation">
-            <a href="/" class="pill-logo" aria-label="AKAI — Home"><span aria-hidden="true">A</span></a>
-            <ul class="pill-list" role="list">
-                <li>
-                    <a href="/#studio" class="pill" data-section="studio">
-                        <span class="pill__circle" aria-hidden="true"></span>
-                        <span class="pill__stack">
-                            <span class="pill__label">Studio</span>
-                            <span class="pill__label pill__label--hover" aria-hidden="true">Studio</span>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/#contact" class="pill" data-section="contact">
-                        <span class="pill__circle" aria-hidden="true"></span>
-                        <span class="pill__stack">
-                            <span class="pill__label">Contact</span>
-                            <span class="pill__label pill__label--hover" aria-hidden="true">Contact</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <a href="/" class="nav__logo" aria-label="AKAI — Home">AKAI</a>
         <p class="nav__time" id="local-time" hidden><span class="nav__time-place">Santiago, DR</span> <time></time></p>
-        <button class="pill-menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="pill-popover">
-            <span></span>
-            <span></span>
-        </button>
-        <nav class="pill-popover" id="pill-popover" aria-label="Mobile navigation">
-            <ul class="pill-popover__list" role="list">
-                <li><a href="/#studio" class="pill-popover__link" data-section="studio">Studio</a></li>
-                <li><a href="/#contact" class="pill-popover__link" data-section="contact">Contact</a></li>
-            </ul>
+        <nav class="nav__links" aria-label="Main navigation">
+            <a href="/#studio" data-section="studio">Studio</a>
+            <a href="/#contact" data-section="contact">Contact</a>
         </nav>
     </header>
 

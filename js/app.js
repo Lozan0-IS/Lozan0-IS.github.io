@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouchDevice = window.matchMedia('(hover: none)').matches;
 
-    // --- 3. Active Section (pill dot follows the section in view) ---
+    // --- 3. Active Section (nav link follows the section in view) ---
     const initActiveSection = () => {
-        const sections = ['work', 'studio', 'contact']
+        const sections = ['studio', 'contact']
             .map(id => document.getElementById(id))
             .filter(Boolean);
         if (sections.length === 0) return;
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isActive = link.dataset.section === id;
                 if (isActive) link.setAttribute('aria-current', 'location');
                 else link.removeAttribute('aria-current');
-                if (link.classList.contains('pill')) link.parentElement.classList.toggle('is-active', isActive);
             });
         };
 
@@ -30,52 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { rootMargin: '-45% 0px -50% 0px' });
 
         sections.forEach(section => observer.observe(section));
-    };
-
-    // --- 4. Mobile Menu (popover under the pill bar) ---
-    const initMobileMenu = () => {
-        const menuBtn = document.getElementById('menu-btn');
-        const popover = document.getElementById('pill-popover');
-        if (!menuBtn || !popover) return;
-
-        const isOpen = () => menuBtn.getAttribute('aria-expanded') === 'true';
-
-        const openMenu = () => {
-            popover.classList.add('is-open');
-            menuBtn.setAttribute('aria-expanded', 'true');
-            const first = popover.querySelector('a');
-            if (first) first.focus();
-        };
-
-        const closeMenu = ({ restoreFocus = true } = {}) => {
-            popover.classList.remove('is-open');
-            menuBtn.setAttribute('aria-expanded', 'false');
-            if (restoreFocus) menuBtn.focus();
-        };
-
-        menuBtn.addEventListener('click', () => (isOpen() ? closeMenu() : openMenu()));
-
-        // Following a link moves focus to the destination, so focus is not sent back to the button
-        popover.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => closeMenu({ restoreFocus: false }));
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isOpen()) closeMenu();
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isOpen() && !popover.contains(e.target) && !menuBtn.contains(e.target)) {
-                closeMenu({ restoreFocus: false });
-            }
-        });
-
-        // Tabbing out of the popover closes it rather than leaving it floating over content
-        popover.addEventListener('focusout', (e) => {
-            if (isOpen() && e.relatedTarget && !popover.contains(e.relatedTarget) && e.relatedTarget !== menuBtn) {
-                closeMenu({ restoreFocus: false });
-            }
-        });
     };
 
     // --- 5. Smooth Anchor Scrolling ---
@@ -351,173 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 15. Proximity Grid (AKAI Experiments) ---
-    // A live version of the experiments dot grid: dots near the pointer swell and take the project colour;
-    // a tap or click sends a ring through the field. Draws only while something is happening.
-    const initProximityGrid = () => {
-        const host = document.querySelector('[data-proximity-grid]');
-        if (!host) return;
-
-        const canvas = document.createElement('canvas');
-        canvas.className = 'proximity-grid__canvas';
-        canvas.setAttribute('aria-hidden', 'true');
-        host.appendChild(canvas);
-        host.classList.add('is-live');
-        const ctx = canvas.getContext('2d');
-
-        const styles = getComputedStyle(host);
-        const accent = styles.getPropertyValue('--project-color').trim() || '#2A7A5F';
-        const ink = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#141413';
-        const SPACING = 26;
-        const BASE_R = 2;
-        const MAX_R = 5;
-        const REACH = 130;
-
-        let dots = [];
-        let width = 0;
-        let height = 0;
-        let pointer = null;
-        let presence = 0; // eases the highlight in/out when the pointer enters or leaves
-        let ripples = [];
-        let frame = null;
-
-        const hexToRgb = (hex) => {
-            const n = parseInt(hex.replace('#', ''), 16);
-            return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-        };
-        const accentRgb = hexToRgb(accent);
-        const inkRgb = hexToRgb(ink);
-
-        const layout = () => {
-            const rect = host.getBoundingClientRect();
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            width = rect.width;
-            height = rect.height;
-            canvas.width = Math.round(width * dpr);
-            canvas.height = Math.round(height * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            const cols = Math.floor(width / SPACING);
-            const rows = Math.floor(height / SPACING);
-            const offsetX = (width - (cols - 1) * SPACING) / 2;
-            const offsetY = (height - (rows - 1) * SPACING) / 2;
-            dots = [];
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    dots.push({ x: offsetX + c * SPACING, y: offsetY + r * SPACING });
-                }
-            }
-            draw();
-        };
-
-        const draw = () => {
-            ctx.clearRect(0, 0, width, height);
-            const now = performance.now();
-            ripples = ripples.filter(r => now - r.start < r.life);
-
-            dots.forEach(dot => {
-                let energy = 0;
-                if (pointer && presence > 0) {
-                    const d = Math.hypot(dot.x - pointer.x, dot.y - pointer.y);
-                    if (d < REACH) energy = (1 - d / REACH) ** 2 * presence;
-                }
-                ripples.forEach(r => {
-                    const t = (now - r.start) / r.life;
-                    const radius = t * r.maxRadius;
-                    const band = Math.abs(Math.hypot(dot.x - r.x, dot.y - r.y) - radius);
-                    if (band < 30) energy = Math.max(energy, (1 - band / 30) * (1 - t));
-                });
-
-                const radius = BASE_R + (MAX_R - BASE_R) * energy;
-                const mix = (a, b) => Math.round(a + (b - a) * energy);
-                const alpha = 0.18 + 0.82 * energy;
-                ctx.fillStyle = `rgba(${mix(inkRgb[0], accentRgb[0])}, ${mix(inkRgb[1], accentRgb[1])}, ${mix(inkRgb[2], accentRgb[2])}, ${alpha})`;
-                ctx.beginPath();
-                ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        };
-
-        const tick = () => {
-            const target = pointer ? 1 : 0;
-            presence += (target - presence) * (prefersReducedMotion ? 1 : 0.2);
-            if (Math.abs(target - presence) < 0.01) presence = target;
-            draw();
-            const busy = presence !== target || ripples.length > 0;
-            frame = busy ? requestAnimationFrame(tick) : null;
-        };
-
-        const wake = () => {
-            if (!frame) frame = requestAnimationFrame(tick);
-        };
-
-        const local = (e) => {
-            const rect = host.getBoundingClientRect();
-            return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-        };
-
-        host.addEventListener('pointermove', (e) => {
-            if (e.pointerType !== 'mouse' && e.buttons === 0) return;
-            pointer = local(e);
-            draw();
-            wake();
-        });
-
-        host.addEventListener('pointerleave', () => {
-            pointer = null;
-            wake();
-        });
-
-        host.addEventListener('pointerdown', (e) => {
-            pointer = local(e);
-            if (!prefersReducedMotion) {
-                ripples.push({ ...pointer, start: performance.now(), life: 900, maxRadius: Math.hypot(width, height) * 0.6 });
-            }
-            wake();
-        });
-
-        host.addEventListener('pointerup', (e) => {
-            if (e.pointerType !== 'mouse') {
-                pointer = null;
-                wake();
-            }
-        });
-
-        if ('ResizeObserver' in window) {
-            new ResizeObserver(layout).observe(host);
-        } else {
-            window.addEventListener('resize', layout);
-        }
-        layout();
-    };
-
-    // Inverts the fixed nav while a dark section is under it
-    const initNavTheme = () => {
-        const nav = document.getElementById('nav');
-        const darkAreas = document.querySelectorAll('.theme-dark, .footer');
-        if (!nav || !darkAreas.length || !('IntersectionObserver' in window)) return;
-
-        const under = new Set();
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) under.add(entry.target);
-                else under.delete(entry.target);
-            });
-            nav.classList.toggle('on-dark', under.size > 0);
-        }, { rootMargin: '-4% 0px -94% 0px' });
-
-        darkAreas.forEach((area) => observer.observe(area));
-    };
-
     // --- Initialization ---
-    initNavTheme();
     initActiveSection();
     initLocalTime();
-    initMobileMenu();
     initSmoothScroll();
     initBrief();
     initGlyphSizes();
-    initProximityGrid();
     initMagneticContact();
     initScrollObservers();
 
