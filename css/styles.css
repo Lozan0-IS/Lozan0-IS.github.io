@@ -132,6 +132,11 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink-secondary);
 }
 
+.section-index {
+  margin-right: 0.75em;
+  color: var(--error);
+}
+
 
 /* Navigation — pill bar (pattern adapted from React Bits PillNav, rebuilt in CSS) */
 .nav {
@@ -1050,11 +1055,36 @@ a.project__link:focus-visible .project__dash {
 }
 
 .method__step {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   padding: 1.5rem 1.5rem 0 0;
 }
+
+/* Registration marks where the spec sheet's rules meet: ends of the top rule and each column divider */
+.method__steps {
+  position: relative;
+}
+
+.method__steps::before,
+.method__steps::after,
+.method__step + .method__step::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 11px;
+  height: 11px;
+  color: var(--ink);
+  background:
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+  pointer-events: none;
+}
+
+.method__steps::before { left: -5px; }
+.method__steps::after { right: -5px; }
+.method__step + .method__step::before { left: -6px; }
 
 .method__step + .method__step {
   padding-left: 1.5rem;
@@ -1792,6 +1822,10 @@ html:not(.js) .case__caption {
 
   .method__step:nth-child(n + 3) {
     margin-top: 2rem;
+  }
+
+  .method__step + .method__step::before {
+    display: none;
   }
 }
 
