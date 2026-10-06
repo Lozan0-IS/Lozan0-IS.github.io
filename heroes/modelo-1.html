@@ -70,6 +70,10 @@
 
         .card:hover .dots, .card:focus-within .dots { --dot: 76%; }
 
+        /* With JS the dots become particles on a canvas; without it the CSS dot letters above remain */
+        .pixels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+        .card.is-canvas .dots { background: none; }
+
         @media (max-width: 760px) {
             .lede { width: 100%; text-indent: 2em; }
             .stats { flex-wrap: wrap; }
@@ -99,9 +103,192 @@
                 <li>Santiago, DR</li>
             </ul>
 
-            <h1 class="word"><span class="sr-only">AKAI</span><span aria-hidden="true">A<span class="dots">KA</span>I</span></h1>
+            <h1 class="word"><span class="sr-only">AKAI</span><span aria-hidden="true">A<span class="dots" data-g="K">K</span><span class="dots" data-g="A">A</span>I</span></h1>
         </section>
     </main>
+    <script>
+        // The K and the A are made of dots. They start scattered across the page, drift for a moment,
+        // then spring into place. The pointer pushes them away and they re-form; a click shatters them again.
+        (() => {
+            const card = document.querySelector('.card');
+            const glyphs = [...card.querySelectorAll('.dots')];
+            if (!card || !glyphs.length) return;
+
+            const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+            const INK = '#0A0A09';
+            const STIFFNESS = 0.05;
+            const DAMPING = 0.86;
+            const rnd = (a, b) => a + Math.random() * (b - a);
+
+            card.classList.add('is-canvas');
+            const canvas = document.createElement('canvas');
+            canvas.className = 'pixels';
+            canvas.setAttribute('aria-hidden', 'true');
+            card.append(canvas);
+            const ctx = canvas.getContext('2d');
+
+            let W = 0, H = 0, cell = 20;
+            let dots = [];
+            let running = false;
+            let started = 0;
+            let hover = 0, hoverGoal = 0;
+            let pointer = null;
+
+            // Dot targets come from the real letter shapes: draw each glyph where it sits in the page,
+            // then keep one dot per grid cell the glyph covers.
+            const build = (immediate) => {
+                const box = card.getBoundingClientRect();
+                W = box.width; H = box.height;
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = Math.round(W * dpr);
+                canvas.height = Math.round(H * dpr);
+                canvas.style.width = W + 'px';
+                canvas.style.height = H + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                const style = getComputedStyle(glyphs[0]);
+                const size = parseFloat(style.fontSize);
+                cell = size * 0.03;
+
+                const mask = document.createElement('canvas');
+                mask.width = Math.ceil(W);
+                mask.height = Math.ceil(H);
+                const mctx = mask.getContext('2d');
+                mctx.font = `${style.fontWeight} ${size}px ${style.fontFamily}`;
+                mctx.textBaseline = 'alphabetic';
+                mctx.fillStyle = '#000';
+                const ascent = mctx.measureText('K').fontBoundingBoxAscent || size * 0.93;
+                glyphs.forEach((g) => {
+                    const r = g.getBoundingClientRect();
+                    mctx.fillText(g.dataset.g, r.left - box.left, r.top - box.top + ascent);
+                });
+                const px = mctx.getImageData(0, 0, mask.width, mask.height).data;
+
+                const targets = [];
+                for (let y = cell / 2; y < H; y += cell) {
+                    for (let x = cell / 2; x < W; x += cell) {
+                        if (px[((y | 0) * mask.width + (x | 0)) * 4 + 3] > 127) targets.push([x, y]);
+                    }
+                }
+
+                // Keep existing dots (so a resize flows instead of resetting); add or drop to match the target count
+                const next = targets.map(([tx, ty], i) => {
+                    const old = dots[i];
+                    return {
+                        x: old ? old.x : rnd(0, W),
+                        y: old ? old.y : rnd(0, H),
+                        vx: old ? old.vx : rnd(-0.6, 0.6),
+                        vy: old ? old.vy : rnd(-0.6, 0.6),
+                        tx, ty,
+                        scatter: old ? old.scatter : rnd(0.25, 0.95),
+                        delay: immediate ? 0 : 700 + rnd(0, 1200)
+                    };
+                });
+                dots = next;
+                started = performance.now();
+                kick();
+            };
+
+            const kick = () => {
+                if (running) return;
+                running = true;
+                requestAnimationFrame(tick);
+            };
+
+            const tick = (now) => {
+                const elapsed = now - started;
+                let moving = false;
+
+                hover += (hoverGoal - hover) * 0.09;
+                if (Math.abs(hoverGoal - hover) > 0.004) moving = true; else hover = hoverGoal;
+
+                ctx.clearRect(0, 0, W, H);
+                ctx.fillStyle = INK;
+                const pushRadius = cell * 6;
+                const baseR = cell * (0.27 + 0.45 * hover);
+
+                for (const d of dots) {
+                    if (elapsed < d.delay) {
+                        // Before its turn a dot just drifts, so the page reads as scattered
+                        d.vx += rnd(-0.04, 0.04);
+                        d.vy += rnd(-0.04, 0.04);
+                        d.x = Math.min(Math.max(d.x + d.vx, 0), W);
+                        d.y = Math.min(Math.max(d.y + d.vy, 0), H);
+                        moving = true;
+                    } else {
+                        let ax = (d.tx - d.x) * STIFFNESS;
+                        let ay = (d.ty - d.y) * STIFFNESS;
+                        if (pointer) {
+                            const dx = d.x - pointer.x, dy = d.y - pointer.y;
+                            const dist = Math.hypot(dx, dy);
+                            if (dist < pushRadius && dist > 0.01) {
+                                const f = Math.pow(1 - dist / pushRadius, 2) * 7;
+                                ax += (dx / dist) * f;
+                                ay += (dy / dist) * f;
+                            }
+                        }
+                        d.vx = (d.vx + ax) * DAMPING;
+                        d.vy = (d.vy + ay) * DAMPING;
+                        d.x += d.vx;
+                        d.y += d.vy;
+                        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.04 || Math.abs(d.tx - d.x) + Math.abs(d.ty - d.y) > 0.25) moving = true;
+                    }
+
+                    // Dots grow from small, uneven specks to the uniform grid as they arrive
+                    const away = Math.min(1, Math.hypot(d.tx - d.x, d.ty - d.y) / (cell * 14));
+                    const r = baseR * (1 - away * (1 - d.scatter));
+                    ctx.beginPath();
+                    ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                if (moving) requestAnimationFrame(tick); else running = false;
+            };
+
+            const shatter = () => {
+                dots.forEach((d) => {
+                    const a = rnd(0, Math.PI * 2), s = rnd(cell * 0.6, cell * 2.2);
+                    d.vx += Math.cos(a) * s;
+                    d.vy += Math.sin(a) * s;
+                });
+                started = performance.now() - 5000;
+                kick();
+            };
+
+            const setPointer = (e) => {
+                const r = card.getBoundingClientRect();
+                pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+                kick();
+            };
+
+            if (!reduced) {
+                if (finePointer) {
+                    card.addEventListener('pointermove', setPointer);
+                    card.addEventListener('pointerenter', () => { hoverGoal = 1; kick(); });
+                    card.addEventListener('pointerleave', () => { pointer = null; hoverGoal = 0; kick(); });
+                }
+                card.addEventListener('pointerdown', (e) => { if (!e.target.closest('a')) shatter(); });
+            }
+
+            let resizeTimer;
+            addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => build(true), 150);
+            });
+
+            // Wait for the webfont so the sampled shapes match the letters on screen
+            Promise.resolve(document.fonts && document.fonts.load('700 100px "Space Grotesk"'))
+                .then(() => (document.fonts ? document.fonts.ready : null))
+                .then(() => {
+                    build(reduced);
+                    if (reduced) {
+                        dots.forEach((d) => { d.x = d.tx; d.y = d.ty; d.vx = d.vy = 0; d.scatter = 1; });
+                        kick();
+                    }
+                });
+        })();
+    </script>
     <a class="back mono" href="/heroes/">← All models</a>
 </body>
 </html>
