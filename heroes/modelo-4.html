@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hero model 4 — Split — AKAI</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="/heroes/base.css">
+    <style>
+        /* Two halves: the name stood on its side in heavy type, and the argument in serif beside it. */
+        :root { --paper: #EFEDE8; --ink: #0A0A09; }
+
+        body { background: #000; color: #fff; }
+
+        .hero { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); min-height: 100vh; min-height: 100dvh; }
+
+        .name {
+            position: relative;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        .name h1 {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: clamp(8rem, 46vh, 40rem);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.07em;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .name .tag { position: absolute; left: var(--pad); top: 1.25rem; display: flex; align-items: center; min-height: 44px; }
+
+        .copy { display: grid; grid-template-rows: auto 1fr auto; padding: 1.25rem var(--pad) 4.5rem; gap: 2rem; }
+
+        .copy__top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; color: rgba(255, 255, 255, 0.6); }
+
+        .statement {
+            align-self: center;
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5.4vw, 6rem);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        .index { list-style: none; border-top: 1px solid rgba(255, 255, 255, 0.32); }
+
+        .index li { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+
+        .index a {
+            display: grid;
+            grid-template-columns: 3rem 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            min-height: 52px;
+            font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .index .mono { color: rgba(255, 255, 255, 0.6); }
+        .index .arrow { opacity: 0; transform: translateX(-6px); transition: opacity 200ms ease, transform 200ms var(--ease-out); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .index a:hover .arrow { opacity: 1; transform: none; }
+        }
+
+        .index a:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+        .index a:focus-visible .arrow, .index a:active .arrow { opacity: 1; transform: none; }
+
+        .links { position: fixed; right: var(--pad); bottom: 1rem; display: flex; gap: 20px; mix-blend-mode: difference; color: #fff; z-index: 10; }
+
+        @media (max-width: 860px) {
+            .hero { grid-template-columns: 1fr; }
+            .name { min-height: 46vh; }
+            .name h1 { writing-mode: horizontal-tb; transform: none; font-size: 46vw; }
+        }
+    </style>
+</head>
+<body>
+    <main class="hero">
+        <section class="name" aria-label="Studio name">
+            <a class="tag mono" href="/heroes/" aria-label="AKAI">AKAI ®</a>
+            <h1>AKAI</h1>
+        </section>
+
+        <section class="copy" aria-label="Introduction">
+            <div class="copy__top mono"><span>Creative Intelligence Studio</span><span>Santiago, DR</span></div>
+
+            <p class="statement">Technology is our medium. The experience is the result.</p>
+
+            <ol class="index" aria-label="Disciplines">
+                <li><a href="/#disciplines-title"><span class="mono">01</span><span>Brand &amp; Creative</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                <li><a href="/#disciplines-title"><span class="mono">02</span><span>Digital Experiences</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                <li><a href="/#disciplines-title"><span class="mono">03</span><span>Technology</span><span class="arrow" aria-hidden="true">→</span></a></li>
+                <li><a href="/#disciplines-title"><span class="mono">04</span><span>Automation &amp; Intelligence</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            </ol>
+        </section>
+    </main>
+
+    <nav class="links" aria-label="Main">
+        <a class="ghost" href="/#studio">Studio</a>
+        <a class="ghost" href="/#contact">Contact</a>
+    </nav>
+    <a class="back mono" href="/heroes/">← All models</a>
+</body>
+</html>
