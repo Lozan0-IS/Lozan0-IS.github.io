@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hero model 9 — Sentence on a blueprint — AKAI</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="/heroes/base.css">
+    <style>
+        /* Models 7 and 8 together: "We build ___" where each word is drawn like a typographic specimen.
+           The guides are the real vertical metrics of the typeface (ascender, x-height, baseline, descender),
+           measured in the browser, and the number in the margin is the width of the word on screen. */
+        body { background: #000; color: #fff; }
+
+        .hero { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr auto; padding: 1.25rem var(--pad) 4.5rem; gap: 0.5rem; }
+
+        .top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+        .logo { font-size: 1rem; letter-spacing: 0.02em; }
+        .top p { color: rgba(255, 255, 255, 0.6); }
+
+        .lead { align-self: end; margin-top: clamp(1rem, 5vh, 3rem); font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.5rem, 7vw, 7.5rem); line-height: 0.95; letter-spacing: -0.055em; }
+
+        .spec { align-self: center; width: 100%; height: auto; max-height: 60vh; overflow: visible; }
+
+        .guide { stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; stroke-dasharray: 2000; stroke-dashoffset: 2000; animation: draw 1.3s var(--ease-out) forwards; }
+        .guide--v { stroke: rgba(255, 255, 255, 0.22); }
+        .guide:nth-of-type(2) { animation-delay: 0.1s; }
+        .guide:nth-of-type(3) { animation-delay: 0.2s; }
+        .guide:nth-of-type(4) { animation-delay: 0.3s; }
+        .guide:nth-of-type(5) { animation-delay: 0.4s; }
+
+        .word { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.04em; fill: #fff; fill-opacity: 0; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 4000; stroke-dashoffset: 4000; }
+
+        .tick { font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; fill: rgba(255, 255, 255, 0.55); opacity: 0; animation: show 0.6s 1.2s ease forwards; }
+        .dim { stroke: rgba(255, 255, 255, 0.5); stroke-width: 1; }
+        .dimline { transition: opacity 400ms ease; }
+
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+        @keyframes show { to { opacity: 1; } }
+
+        .meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; color: rgba(255, 255, 255, 0.6); }
+        .meta b { font-weight: 400; color: #fff; }
+
+        .links { position: fixed; right: var(--pad); bottom: 1rem; display: flex; gap: 20px; mix-blend-mode: difference; color: #fff; z-index: 10; }
+
+        @media (max-width: 640px) {
+            .tick, .dimline text { display: none; }
+            .meta span:nth-child(2) { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .guide { stroke-dashoffset: 0; animation: none; }
+            .tick { opacity: 1; animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <main class="hero">
+        <header class="top">
+            <a class="logo" href="/heroes/" aria-label="AKAI">AKAI</a>
+            <p class="mono">Creative Intelligence Studio</p>
+        </header>
+
+        <h1 class="lead" aria-label="We build brands, websites, platforms, automations and experiences.">We build</h1>
+
+        <svg class="spec" id="spec" viewBox="60 120 1380 410" aria-hidden="true" focusable="false">
+            <line class="guide guide--v" x1="60" y1="0" x2="60" y2="520"/>
+            <line class="guide" id="g-asc" x1="60" y1="150" x2="1440" y2="150"/>
+            <line class="guide" id="g-xh" x1="60" y1="250" x2="1440" y2="250"/>
+            <line class="guide" id="g-base" x1="60" y1="380" x2="1440" y2="380"/>
+            <line class="guide" id="g-desc" x1="60" y1="440" x2="1440" y2="440"/>
+
+            <text class="tick" id="t-asc" x="1436" y="144" text-anchor="end">Ascender</text>
+            <text class="tick" id="t-xh" x="1436" y="244" text-anchor="end">X-height</text>
+            <text class="tick" id="t-base" x="1436" y="374" text-anchor="end">Baseline</text>
+            <text class="tick" id="t-desc" x="1436" y="434" text-anchor="end">Descender</text>
+
+            <text class="word" id="word" x="60" y="380" font-size="260">brands.</text>
+
+            <g class="dimline" id="dimline" opacity="0"></g>
+        </svg>
+
+        <div class="meta mono">
+            <span id="readout"><b>01 / 05</b> · brands · 6 glyphs</span>
+            <span>Technology is our medium. The experience is the result.</span>
+            <span>Santiago, DR · <time id="clock"></time></span>
+        </div>
+    </main>
+
+    <nav class="links" aria-label="Main">
+        <a class="ghost" href="/#studio">Studio</a>
+        <a class="ghost" href="/#contact">Contact</a>
+    </nav>
+    <a class="back mono" href="/heroes/">← All models</a>
+
+    <script>
+        (() => {
+            const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const NS = 'http://www.w3.org/2000/svg';
+            const WORDS = ['brands', 'websites', 'platforms', 'automations', 'experiences'];
+            const FAMILY = '"Times New Roman", Times, serif';
+            const FIT_WIDTH = 1210;           // widest word fills this much of the drawing
+            const BASELINE = 380;
+
+            const word = document.getElementById('word');
+            const dimline = document.getElementById('dimline');
+            const readout = document.getElementById('readout');
+            const $ = (id) => document.getElementById(id);
+
+            // 1. Size the type so the longest word fits, then place the guides where this typeface really puts them
+            const ctx = document.createElement('canvas').getContext('2d');
+            const measure = (text, size, style = 'italic') => { ctx.font = `${style} 400 ${size}px ${FAMILY}`; return ctx.measureText(text); };
+
+            const longest = WORDS.reduce((a, b) => (b.length > a.length ? b : a)) + '.';
+            const size = Math.min(300, Math.floor(FIT_WIDTH / (measure(longest, 100).width / 100)));
+            word.setAttribute('font-size', size);
+
+            const asc = measure('h', size).actualBoundingBoxAscent;
+            const xh = measure('x', size).actualBoundingBoxAscent;
+            const desc = measure('p', size).actualBoundingBoxDescent;
+            const place = (id, y) => { const g = $('g-' + id); g.setAttribute('y1', y); g.setAttribute('y2', y); $('t-' + id).setAttribute('y', y - 6); };
+            place('asc', BASELINE - asc);
+            place('xh', BASELINE - xh);
+            place('base', BASELINE);
+            place('desc', BASELINE + desc);
+
+            // 2. A dimension line under the current word, measured from what is on screen
+            const dimension = (label) => {
+                const b = word.getBBox();
+                const y = BASELINE + desc + 44;
+                dimline.innerHTML = '';
+                const add = (tag, attrs, cls) => { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); if (cls) el.setAttribute('class', cls); dimline.append(el); return el; };
+                add('line', { x1: b.x, y1: y, x2: b.x + b.width, y2: y }, 'dim');
+                add('line', { x1: b.x, y1: y - 7, x2: b.x, y2: y + 7 }, 'dim');
+                add('line', { x1: b.x + b.width, y1: y - 7, x2: b.x + b.width, y2: y + 7 }, 'dim');
+                add('text', { x: b.x + b.width / 2, y: y + 26, 'text-anchor': 'middle' }, 'tick').textContent = `${Math.round(b.width)} units`;
+                dimline.querySelectorAll('.tick').forEach((t) => { t.style.opacity = 1; t.style.animation = 'none'; });
+                return Math.round(b.width);
+            };
+
+            // 3. Words: draw the outline, fill, hold, un-fill, erase, next word
+            let index = 0;
+            const show = (i) => {
+                const w = WORDS[i];
+                word.textContent = w + '.';
+                const width = dimension(w);
+                readout.innerHTML = `<b>${String(i + 1).padStart(2, '0')} / ${String(WORDS.length).padStart(2, '0')}</b> · ${w} · ${w.length} glyphs · ${width} units wide`;
+            };
+
+            const cycle = () => {
+                show(index);
+                dimline.style.opacity = 0;
+                const a = word.animate([
+                    { strokeDashoffset: 4000, fillOpacity: 0, offset: 0, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+                    { strokeDashoffset: 0, fillOpacity: 0, offset: 0.3, easing: 'ease' },
+                    { strokeDashoffset: 0, fillOpacity: 1, offset: 0.42 },
+                    { strokeDashoffset: 0, fillOpacity: 1, offset: 0.76, easing: 'ease' },
+                    { strokeDashoffset: 0, fillOpacity: 0, offset: 0.82, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' },
+                    { strokeDashoffset: -4000, fillOpacity: 0, offset: 1 }
+                ], { duration: 5600, fill: 'both' });
+                setTimeout(() => { dimline.style.opacity = 1; }, 1700);
+                a.onfinish = () => { index = (index + 1) % WORDS.length; cycle(); };
+            };
+
+            const start = () => {
+                if (reduced) {
+                    word.style.strokeDashoffset = 0; word.style.fillOpacity = 1;
+                    show(0); dimline.style.opacity = 1;
+                    setInterval(() => { index = (index + 1) % WORDS.length; show(index); }, 3200);
+                } else {
+                    cycle();
+                }
+            };
+
+            (document.fonts ? document.fonts.ready : Promise.resolve()).then(start);
+
+            const clock = $('clock');
+            const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Santo_Domingo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+            const tick = () => { clock.textContent = fmt.format(new Date()) + ' AST'; };
+            tick();
+            setInterval(tick, 15000);
+        })();
+    </script>
+</body>
+</html>
