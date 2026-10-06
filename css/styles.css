@@ -1375,7 +1375,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Sticker — a peel-off logo in the hero. Rebuilt in plain CSS/JS from React Bits' StickerPeel (no React, no GSAP):
    the face is HTML so it uses the site's own font, and a second, flipped copy is the peeled flap. */
 .sticker {
-  --sticker-width: clamp(128px, 14vw, 200px);
+  --sticker-width: clamp(200px, 24vw, 360px);
   --sticker-p: 10px;
   --sticker-start: calc(-1 * var(--sticker-p));
   --sticker-end: calc(100% + var(--sticker-p));
@@ -1426,33 +1426,19 @@ h1, h2, h3, h4, h5, h6 {
   filter: url(#sticker-light);
 }
 
+/* The logo is white on near-black, so the sticker is a dark label with a white die-cut edge */
 .sticker__face {
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 0.4em;
   width: var(--sticker-width);
-  aspect-ratio: 1;
-  border-radius: 50%;
+  padding: calc(var(--sticker-width) * 0.035);
+  border-radius: calc(var(--sticker-width) * 0.08);
   background: #fff;
-  color: #000;
-  text-align: center;
 }
 
-.sticker__mark {
-  font-size: calc(var(--sticker-width) * 0.3);
-  font-weight: 600;
-  letter-spacing: -0.06em;
-  line-height: 0.8;
-}
-
-.sticker__sub {
-  max-width: 7em;
-  font-family: var(--font-mono);
-  font-size: calc(var(--sticker-width) * 0.048);
-  letter-spacing: 0.1em;
-  line-height: 1.5;
-  text-transform: uppercase;
+.sticker__face img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--sticker-width) * 0.05);
 }
 
 .sticker__flap {
