@@ -70,6 +70,50 @@
                     <span class="opening__line" data-delay="3">STUDIO.</span>
                 </div>
             </div>
+
+            <!-- Peel-off sticker: decorative and pointer-driven (hover/press peels it, drag moves it); the studio name is already the h1 -->
+            <div class="sticker" id="sticker" aria-hidden="true">
+                <svg class="sticker__defs" width="0" height="0" focusable="false">
+                    <defs>
+                        <filter id="sticker-light">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feSpecularLighting result="spec" in="blur" specularExponent="100" specularConstant="0.02" lighting-color="white">
+                                <fePointLight id="sticker-light-src" x="100" y="100" z="300"/>
+                            </feSpecularLighting>
+                            <feComposite in="spec" in2="SourceGraphic" result="lit"/>
+                            <feComposite in="lit" in2="SourceAlpha" operator="in"/>
+                        </filter>
+                        <filter id="sticker-light-flipped">
+                            <feGaussianBlur stdDeviation="10" result="blur"/>
+                            <feSpecularLighting result="spec" in="blur" specularExponent="100" specularConstant="0.7" lighting-color="white">
+                                <fePointLight id="sticker-light-flipped-src" x="100" y="100" z="300"/>
+                            </feSpecularLighting>
+                            <feComposite in="spec" in2="SourceGraphic" result="lit"/>
+                            <feComposite in="lit" in2="SourceAlpha" operator="in"/>
+                        </filter>
+                        <filter id="sticker-shadow">
+                            <feDropShadow dx="2" dy="4" stdDeviation="1.8" flood-color="black" flood-opacity="0.6"/>
+                        </filter>
+                        <filter id="sticker-backing">
+                            <feOffset dx="0" dy="0" in="SourceAlpha" result="shape"/>
+                            <feFlood flood-color="rgb(179,179,179)" result="flood"/>
+                            <feComposite operator="in" in="flood" in2="shape"/>
+                        </filter>
+                    </defs>
+                </svg>
+                <div class="sticker__container">
+                    <div class="sticker__main">
+                        <div class="sticker__lit">
+                            <div class="sticker__face"><span class="sticker__mark">AKAI</span><span class="sticker__sub">Creative Intelligence Studio</span></div>
+                        </div>
+                    </div>
+                    <div class="sticker__flap">
+                        <div class="sticker__flap-lit">
+                            <div class="sticker__face sticker__face--back"><span class="sticker__mark">AKAI</span><span class="sticker__sub">Creative Intelligence Studio</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- 3. PHILOSOPHY — the owner's own line -->
