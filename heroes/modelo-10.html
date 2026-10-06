@@ -14,7 +14,7 @@
 
         .hero { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr auto; padding: 1.25rem var(--pad) 4.5rem; gap: 0.5rem; }
 
-        .top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 44px; }
         /* The portal icon as the logo: your icon is a window onto two dot grids drifting against each other */
         .logo { --s: clamp(60px, 5vw, 80px); display: inline-block; width: var(--s); height: var(--s); border-radius: 12%; }
         .logo:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
@@ -40,7 +40,20 @@
         @keyframes spin-b { to { transform: rotate(-360deg); } }
         @media (hover: hover) and (pointer: fine) { .logo:hover .mark { transform: scale(1.08) rotate(-4deg); } }
         @media (prefers-reduced-motion: reduce) { .mark i { animation: none; } }
-        .top p { color: rgba(255, 255, 255, 0.6); }
+        .tagline { margin-right: auto; margin-left: 1rem; color: rgba(255, 255, 255, 0.6); }
+
+        .corner { display: flex; align-items: center; gap: 0.3rem; font-size: 1.0625rem; }
+        .connect { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.7rem; }
+        .connect svg { position: absolute; inset: 3px -4px; width: calc(100% + 8px); height: calc(100% - 6px); overflow: visible; }
+        .connect path { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 340; stroke-dashoffset: 340; animation: pencil 1.1s 0.6s var(--ease-out) forwards; }
+        @keyframes pencil { to { stroke-dashoffset: 0; } }
+        .connect:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 999px; }
+
+        .lang { display: inline-flex; align-items: center; margin-left: 0.9rem; padding-left: 0.9rem; border-left: 1px solid rgba(255, 255, 255, 0.32); color: rgba(255, 255, 255, 0.45); }
+        .lang button { min-width: 36px; min-height: 44px; padding: 0 4px; font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+        .lang button[aria-pressed="true"] { color: #fff; box-shadow: inset 0 -1px 0 #fff; }
+        .lang button:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+        @media (hover: hover) and (pointer: fine) { .lang button:hover { color: #fff; } }
 
         .lead { align-self: end; margin-top: clamp(1rem, 5vh, 3rem); font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.5rem, 7vw, 7.5rem); line-height: 0.95; letter-spacing: -0.055em; transition: opacity 600ms ease; }
 
@@ -69,6 +82,9 @@
 
         @media (max-width: 640px) {
             .tick, .dimline text { display: none; }
+            .tagline { display: none; }
+            .corner { font-size: 1rem; }
+            .lang { margin-left: 0.4rem; padding-left: 0.5rem; }
             .meta span:nth-child(2) { display: none; }
         }
 
@@ -82,7 +98,17 @@
     <main class="hero">
         <header class="top">
             <a class="logo" href="/heroes/" aria-label="AKAI — back to all models"><span class="mark" aria-hidden="true"><i></i><i></i></span></a>
-            <p class="mono">Creative Intelligence Studio</p>
+            <p class="tagline mono" data-i18n="tagline">Creative Intelligence Studio</p>
+            <nav class="corner" aria-label="Main">
+                <a class="connect" href="mailto:hello@akai.do">
+                    <svg viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path d="M10 22 C6 8, 40 2, 70 4 C104 6, 118 14, 112 26 C106 38, 60 38, 26 35 C10 33, 4 25, 10 13"/></svg>
+                    <span data-i18n="connect">Connect</span>
+                </a><span aria-hidden="true">,</span>
+                <a class="ghost" href="/#studio" data-i18n="studio">Studio</a>
+                <span class="lang mono" role="group" aria-label="Language">
+                    <button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="false">ES</button>
+                </span>
+            </nav>
         </header>
 
         <h1 class="lead" id="lead" aria-label="We build brands, websites, platforms, automations and experiences.">We build</h1>
@@ -106,15 +132,11 @@
 
         <div class="meta mono">
             <span id="readout"><b>01 / 05</b> · brands · 6 glyphs</span>
-            <span>Technology is our medium. The experience is the result.</span>
+            <span data-i18n="manifesto">Technology is our medium. The experience is the result.</span>
             <span>Santiago, DR · <time id="clock"></time></span>
         </div>
     </main>
 
-    <nav class="links" aria-label="Main">
-        <a class="ghost" href="/#studio">Studio</a>
-        <a class="ghost" href="/#contact">Contact</a>
-    </nav>
     <a class="back mono" href="/heroes/">← All models</a>
 
     <script>
@@ -124,10 +146,27 @@
             const BASELINE = 380;
             const FIT_WIDTH = 1210;   // the widest serif word fills this much of the drawing
 
+            // Spanish is a draft translation written for this preview; it needs the owner's review before it ships.
+            const TEXT = {
+                en: {
+                    lead: 'We build', words: ['brands', 'websites', 'platforms', 'automations', 'experiences'],
+                    lines: ['Ascender', 'X-height', 'Baseline', 'Descender'],
+                    connect: 'Connect', studio: 'Studio', manifesto: 'Technology is our medium. The experience is the result.',
+                    glyphs: 'glyphs', wide: 'units wide', units: 'units', tagline: 'Creative Intelligence Studio',
+                    aria: 'We build brands, websites, platforms, automations and experiences.'
+                },
+                es: {
+                    lead: 'Construimos', words: ['marcas', 'sitios web', 'plataformas', 'automatizaciones', 'experiencias'],
+                    lines: ['Ascendente', 'Altura de la x', 'Línea base', 'Descendente'],
+                    connect: 'Hablemos', studio: 'Estudio', manifesto: 'La tecnología es nuestro medio. La experiencia es el resultado.',
+                    glyphs: 'glifos', wide: 'unidades de ancho', units: 'unidades', tagline: 'Creative Intelligence Studio',
+                    aria: 'Construimos marcas, sitios web, plataformas, automatizaciones y experiencias.'
+                }
+            };
+
             // The name comes first, in the brand's own typeface; then the sentence, in serif. Each lap starts with the name.
             const BRAND = { text: 'AKAI', family: '"Space Grotesk", system-ui, sans-serif', style: 'normal', weight: 300, spacing: '-0.06em', size: 365 };
             const SERIF = { family: '"Times New Roman", Times, serif', style: 'italic', weight: 400, spacing: '-0.04em' };
-            const WORDS = ['brands', 'websites', 'platforms', 'automations', 'experiences'];
 
             const word = document.getElementById('word');
             const lead = document.getElementById('lead');
@@ -135,11 +174,22 @@
             const readout = document.getElementById('readout');
             const $ = (id) => document.getElementById(id);
 
+            let lang = 'en';
+            try { if (localStorage.getItem('akai-lang') === 'es') lang = 'es'; } catch (e) { /* storage can be blocked; English it is */ }
+            let words = TEXT[lang].words;
+            let items = [];
+            let index = 0;
+            let animation = null;
+            let timer = null;
+
             const ctx = document.createElement('canvas').getContext('2d');
             const measure = (text, f, size) => { ctx.font = `${f.style} ${f.weight} ${size}px ${f.family}`; return ctx.measureText(text); };
 
-            const longest = WORDS.reduce((a, b) => (b.length > a.length ? b : a)) + '.';
-            SERIF.size = Math.min(300, Math.floor(FIT_WIDTH / (measure(longest, SERIF, 100).width / 100)));
+            // Size the serif so this language's longest word fits the drawing
+            const fitSerif = () => {
+                const longest = words.reduce((a, b) => (b.length > a.length ? b : a)) + '.';
+                SERIF.size = Math.min(300, Math.floor(FIT_WIDTH / (measure(longest, SERIF, 100).width / 100)));
+            };
 
             // Each typeface puts its guides in a different place, so they are measured per face and slide between faces
             const metrics = (f) => ({
@@ -159,10 +209,9 @@
                     label.style.transform = `translateY(${ys[k] - 6}px)`;
                 }
                 armed = true;
-                requestAnimationFrame(() => document.querySelectorAll('.guide, .tick').forEach((el) => { el.style.transition = 'transform 800ms cubic-bezier(0.16, 1, 0.3, 1)'; }));
+                requestAnimationFrame(() => document.querySelectorAll('.guide, .spec .tick').forEach((el) => { el.style.transition = 'transform 800ms cubic-bezier(0.16, 1, 0.3, 1)'; }));
                 return m;
             };
-            $('t-asc').textContent = 'Ascender';
 
             const dimension = (descent) => {
                 const b = word.getBBox();
@@ -173,13 +222,10 @@
                 add('line', { x1: b.x, y1: y - 7, x2: b.x, y2: y + 7 }, 'dim');
                 add('line', { x1: b.x + b.width, y1: y - 7, x2: b.x + b.width, y2: y + 7 }, 'dim');
                 const t = add('text', { x: b.x + b.width / 2, y: y + 26, 'text-anchor': 'middle' }, 'tick');
-                t.textContent = `${Math.round(b.width)} units`;
+                t.textContent = `${Math.round(b.width)} ${TEXT[lang].units}`;
                 t.style.opacity = 1; t.style.animation = 'none';
                 return Math.round(b.width);
             };
-
-            const items = [{ kind: 'brand', text: BRAND.text }, ...WORDS.map((w) => ({ kind: 'serif', text: w }))];
-            let index = 0;
 
             const show = (i) => {
                 const it = items[i];
@@ -195,13 +241,17 @@
 
                 const m = placeGuides({ ...f, size });
                 const width = dimension(m.desc);
+                const L = TEXT[lang];
                 const face = it.kind === 'brand' ? 'Space Grotesk Light' : 'Times Italic';
-                const count = `${String(i).padStart(2, '0')} / ${String(WORDS.length).padStart(2, '0')}`;
                 const label = document.createElement('b');
-                const rest = it.kind === 'brand'
-                    ? ` · 4 glyphs · ${width} units wide · ${face}`
-                    : ` · ${it.text} · ${it.text.length} glyphs · ${width} units wide · ${face}`;
-                label.textContent = it.kind === 'brand' ? 'AKAI' : count;
+                let rest;
+                if (it.kind === 'brand') {
+                    label.textContent = 'AKAI';
+                    rest = ` · 4 ${L.glyphs} · ${width} ${L.wide} · ${face}`;
+                } else {
+                    label.textContent = `${String(i).padStart(2, '0')} / ${String(words.length).padStart(2, '0')}`;
+                    rest = ` · ${it.text} · ${it.text.replace(/\s/g, '').length} ${L.glyphs} · ${width} ${L.wide} · ${face}`;
+                }
                 readout.replaceChildren(label, rest);
             };
 
@@ -210,7 +260,7 @@
                 const brand = items[index].kind === 'brand';
                 const D = brand ? 5200 : 5600;
                 dimline.style.opacity = 0;
-                const a = word.animate([
+                animation = word.animate([
                     { strokeDashoffset: 4000, fillOpacity: 0, offset: 0, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
                     { strokeDashoffset: 0, fillOpacity: 0, offset: 0.3, easing: 'ease' },
                     { strokeDashoffset: 0, fillOpacity: 1, offset: 0.42 },
@@ -218,21 +268,49 @@
                     { strokeDashoffset: 0, fillOpacity: 0, offset: brand ? 0.85 : 0.82, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' },
                     { strokeDashoffset: -4000, fillOpacity: 0, offset: 1 }
                 ], { duration: D, fill: 'both' });
-                setTimeout(() => { dimline.style.opacity = 1; }, 1700);
-                a.onfinish = () => { index = (index + 1) % items.length; cycle(); };
+                timer = setTimeout(() => { dimline.style.opacity = 1; }, 1700);
+                animation.onfinish = () => { index = (index + 1) % items.length; cycle(); };
             };
 
-            const start = () => {
+            let slideshow = null;
+            const run = () => {
+                words = TEXT[lang].words;
+                items = [{ kind: 'brand', text: BRAND.text }, ...words.map((w) => ({ kind: 'serif', text: w }))];
+                fitSerif();
+                index = 0;
+                clearTimeout(timer);
+                clearInterval(slideshow);
+                if (animation) { animation.onfinish = null; animation.cancel(); }
                 if (reduced) {
                     word.style.strokeDashoffset = 0; word.style.fillOpacity = 1;
                     show(0); dimline.style.opacity = 1;
-                    setInterval(() => { index = (index + 1) % items.length; show(index); }, 3200);
+                    slideshow = setInterval(() => { index = (index + 1) % items.length; show(index); }, 3200);
                 } else {
                     cycle();
                 }
             };
 
-            (document.fonts ? Promise.all([document.fonts.load('300 100px "Space Grotesk"'), document.fonts.ready]) : Promise.resolve()).then(start);
+            // Static copy follows the language
+            const applyLanguage = () => {
+                const L = TEXT[lang];
+                document.documentElement.lang = lang;
+                lead.firstChild.textContent = L.lead;
+                lead.setAttribute('aria-label', L.aria + ' ' + L.manifesto);
+                document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = L[el.dataset.i18n]; });
+                ['asc', 'xh', 'base', 'desc'].forEach((k, n) => { $('t-' + k).textContent = L.lines[n]; });
+                document.querySelectorAll('[data-lang]').forEach((btn) => btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang)));
+            };
+
+            document.querySelectorAll('[data-lang]').forEach((btn) => btn.addEventListener('click', () => {
+                if (btn.dataset.lang === lang) return;
+                lang = btn.dataset.lang;
+                try { localStorage.setItem('akai-lang', lang); } catch (e) { /* not worth failing for */ }
+                applyLanguage();
+                run();
+            }));
+
+            applyLanguage();
+            (document.fonts ? Promise.all([document.fonts.load('300 100px "Space Grotesk"'), document.fonts.ready]) : Promise.resolve()).then(run);
 
             const clock = $('clock');
             const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Santo_Domingo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
