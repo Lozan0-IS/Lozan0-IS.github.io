@@ -42,33 +42,47 @@
     <a href="#main" class="skip-link">Skip to main content</a>
 
     <header class="nav" id="nav">
-        <a href="/" class="nav__logo" aria-label="AKAI — Home">AKAI</a>
-        <p class="nav__time" id="local-time" hidden><span class="nav__time-place">Santiago, DR</span> <time></time></p>
-        <nav class="nav__links" aria-label="Main navigation">
-            <a href="#studio" data-section="studio">Studio</a>
-            <a href="#contact" data-section="contact">Contact</a>
+        <a href="/" class="nav__logo" aria-label="AKAI — Home"><span class="mark" aria-hidden="true"><i></i><i></i></span></a>
+        <p class="nav__tagline mono">Creative Intelligence Studio</p>
+        <nav class="corner" aria-label="Main navigation">
+            <a class="connect" href="#contact" data-section="contact">
+                <svg viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path d="M10 22 C6 8, 40 2, 70 4 C104 6, 118 14, 112 26 C106 38, 60 38, 26 35 C10 33, 4 25, 10 13"/></svg>
+                <span>Connect</span>
+            </a><span aria-hidden="true">,</span>
+            <a class="corner__link" href="#studio" data-section="studio">Studio</a>
+            <span class="lang mono" role="group" aria-label="Language" data-no-i18n>
+                <button type="button" data-lang="en" aria-pressed="true">EN</button><span aria-hidden="true">/</span><button type="button" data-lang="es" aria-pressed="false">ES</button>
+            </span>
         </nav>
     </header>
 
     <main id="main">
 
-        <!-- 1. OPENING -->
-        <section class="opening" aria-label="Introduction">
-            <div class="hud" aria-hidden="true">
-                <span>Est. 2024</span>
-                <span>Working globally</span>
-                <span>19.4517° N, 70.6970° W</span>
-            </div>
-            <div class="opening__content">
-                <h1 class="opening__wordmark">
-                    <span class="sr-only">AKAI</span>
-                    <span class="wordmark" aria-hidden="true"><span class="glyph"><span class="glyph__ink">A</span></span><span class="glyph"><span class="glyph__ink">K</span></span><span class="glyph"><span class="glyph__ink">A</span></span><span class="glyph"><span class="glyph__ink">I</span></span></span>
-                </h1>
-                <div class="opening__tagline">
-                    <span class="opening__line" data-delay="1">CREATIVE</span>
-                    <span class="opening__line" data-delay="2">INTELLIGENCE</span>
-                    <span class="opening__line" data-delay="3">STUDIO.</span>
-                </div>
+        <!-- 1. HERO — the name is drawn first, then the sentence "We build ___" draws each word over the typeface's real guides -->
+        <section class="hero" id="top" aria-label="Introduction">
+            <h1 class="hero__lead" id="lead" aria-label="AKAI — We build brands, websites, platforms, automations and experiences. Technology is our medium. The experience is the result.">We build</h1>
+
+            <svg class="hero__spec" id="spec" viewBox="60 120 1380 410" aria-hidden="true" focusable="false">
+                <line class="guide guide--v" x1="60" y1="0" x2="60" y2="520"/>
+                <line class="guide" id="g-asc" x1="60" y1="150" x2="1440" y2="150"/>
+                <line class="guide" id="g-xh" x1="60" y1="250" x2="1440" y2="250"/>
+                <line class="guide" id="g-base" x1="60" y1="380" x2="1440" y2="380"/>
+                <line class="guide" id="g-desc" x1="60" y1="440" x2="1440" y2="440"/>
+
+                <text class="tick" id="t-asc" x="1436" y="144" text-anchor="end">Ascender</text>
+                <text class="tick" id="t-xh" x="1436" y="244" text-anchor="end">X-height</text>
+                <text class="tick" id="t-base" x="1436" y="374" text-anchor="end">Baseline</text>
+                <text class="tick" id="t-desc" x="1436" y="434" text-anchor="end">Descender</text>
+
+                <text class="word" id="word" x="60" y="380" font-size="260">AKAI</text>
+
+                <g class="dimline" id="dimline" opacity="0"></g>
+            </svg>
+
+            <div class="hero__meta mono">
+                <span id="readout" data-no-i18n>AKAI</span>
+                <span>Technology is our medium. The experience is the result.</span>
+                <span data-no-i18n>Santiago, DR · <time id="clock"></time></span>
             </div>
 
             <!-- Peel-off sticker: decorative and pointer-driven (hover/press peels it, drag moves it); the studio name is already the h1 -->
@@ -341,6 +355,7 @@
         </div>
     </footer>
 
+    <script src="/js/i18n-es.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>

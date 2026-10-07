@@ -123,7 +123,8 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-.meta-label {
+.meta-label,
+.mono {
   font-family: var(--font-mono);
   font-size: var(--text-meta);
   font-weight: 400;
@@ -159,9 +160,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ink-secondary);
 }
 
-/* Navigation — no bar. Wordmark and clock sit in the top corners, the links bottom-right.
+/* Navigation — no bar. The portal icon sits top-left and the menu top-right.
    Difference blending keeps white text readable when it crosses white type, with no backdrop needed. */
 .nav {
+  --logo: clamp(60px, 5vw, 80px);
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -175,56 +177,134 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: auto;
 }
 
+/* The icon is a window onto two dot grids drifting against each other */
 .nav__logo {
   top: 1.25rem;
   left: clamp(1.5rem, 4vw, 4rem);
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-  color: #fff;
-  text-decoration: none;
+  display: block;
+  width: var(--logo);
+  height: var(--logo);
+  border-radius: 12%;
 }
 
-.nav__time {
-  top: 1.25rem;
-  right: clamp(1.5rem, 4vw, 4rem);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em; /* flex drops the space between the label and the time */
-  min-height: 44px;
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #fff;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+.nav__logo:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
 }
 
-.nav__time time {
-  color: #fff;
+.mark {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  -webkit-mask-image: url('/assets/akai-icon.png');
+  mask-image: url('/assets/akai-icon.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  transition: transform 500ms var(--ease-out);
 }
 
-.nav__links {
-  right: clamp(1.5rem, 4vw, 4rem);
-  bottom: 1rem;
+.mark i {
+  position: absolute;
+  inset: -30%;
+}
+
+.mark i:nth-child(1) {
+  background: radial-gradient(circle, #fff 0.7px, transparent 1.1px) 0 0 / 3.4px 3.4px;
+  animation: spin-a 30s linear infinite;
+}
+
+.mark i:nth-child(2) {
+  background: radial-gradient(circle, #fff 0.7px, transparent 1.1px) 0 0 / 3.65px 3.65px;
+  mix-blend-mode: difference;
+  animation: spin-b 42s linear infinite reverse;
+}
+
+@keyframes spin-a { to { transform: rotate(360deg); } }
+@keyframes spin-b { to { transform: rotate(-360deg); } }
+
+@media (hover: hover) and (pointer: fine) {
+  .nav__logo:hover .mark {
+    transform: scale(1.08) rotate(-4deg);
+  }
+}
+
+.nav__tagline,
+.corner {
+  top: calc(1.25rem + var(--logo) / 2 - 22px);
   display: flex;
-  gap: 20px;
+  align-items: center;
+  min-height: 44px;
 }
 
-.nav__links a {
+.nav__tagline {
+  left: calc(clamp(1.5rem, 4vw, 4rem) + var(--logo) + 1rem);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.corner {
+  right: clamp(1.5rem, 4vw, 4rem);
+  gap: 0.3rem;
+  font-size: 1.0625rem;
+}
+
+/* Connect is circled in pencil, drawn once on load */
+.connect {
   position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 1rem;
+  padding: 0 0.7rem;
   color: #fff;
   text-decoration: none;
 }
 
-.nav__links a::after {
+.connect svg {
+  position: absolute;
+  inset: 3px -4px;
+  width: calc(100% + 8px);
+  height: calc(100% - 6px);
+  overflow: visible;
+}
+
+.connect path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: pencil 1.1s 0.6s var(--ease-out) forwards;
+}
+
+@keyframes pencil { to { stroke-dashoffset: 0; } }
+
+.connect[aria-current] path {
+  stroke-width: 2.2;
+}
+
+.connect:focus-visible,
+.corner__link:focus-visible,
+.lang button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.corner__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.corner__link::after {
   content: '';
   position: absolute;
   left: 0;
@@ -236,261 +316,146 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 200ms ease;
 }
 
-.nav__links a[aria-current],
-.nav__links a:focus-visible {
-  outline: none;
-}
-
-.nav__links a[aria-current]::after,
-.nav__links a:focus-visible::after {
-  opacity: 1;
-}
-
-.nav__links a:active::after {
+.corner__link[aria-current]::after,
+.corner__link:focus-visible::after,
+.corner__link:active::after {
   opacity: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .nav__links a:hover::after {
+  .corner__link:hover::after {
     opacity: 1;
   }
 }
 
-/* On the narrowest phones the place name would crowd the wordmark; the time alone still reads */
-@media (max-width: 400px) {
-  .nav__time-place {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-}
-
-/* Split-flap clock tiles */
-.flap {
+.lang {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  perspective: 120px;
+  margin-left: 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.45);
 }
 
-.flap__cell {
-  position: relative;
-  display: inline-block;
-  min-width: 1.35ch;
-  padding: 3px 2px;
-  border-radius: 3px;
-  background: var(--ink);
-  color: var(--surface);
-  text-align: center;
-  line-height: 1;
-  backface-visibility: hidden;
+.lang button {
+  min-width: 36px;
+  min-height: 44px;
+  padding: 0 4px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
-/* The hinge line every split-flap tile has */
-.flap__cell::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.flap__sep {
-  padding: 0 1px;
-}
-
-/* Opening Section */
-.opening {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 clamp(1.5rem, 4vw, 4rem) clamp(3rem, 8vh, 6rem);
-  position: relative;
-}
-
-/* Technical strip under the nav: three cells between hairlines, registration marks at both ends */
-.hud {
-  position: absolute;
-  top: 5rem;
-  left: clamp(1.5rem, 4vw, 4rem);
-  right: clamp(1.5rem, 4vw, 4rem);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--border-strong);
-  border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-secondary);
-}
-
-.hud span:nth-child(2) { text-align: center; }
-.hud span:nth-child(3) { text-align: right; }
-
-.hud::before,
-.hud::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  width: 11px;
-  height: 11px;
-  color: var(--ink);
-  background:
-    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
-    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
-}
-
-.hud::before { left: -5px; }
-.hud::after { right: -5px; }
-
-@media (max-width: 640px) {
-  .hud span:nth-child(2) { display: none; }
-  .hud { grid-template-columns: 1fr 1fr; }
-}
-
-.opening__wordmark {
-  font-size: clamp(6rem, 45vw, 60rem);
-  font-weight: 300;
-  letter-spacing: -0.06em;
-  line-height: 0.78;
-  color: var(--ink);
-  margin: 0 0 clamp(1.5rem, 4vh, 3rem) -0.04em;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUpIn 700ms var(--ease-out) forwards;
-}
-
-.opening__tagline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.4em;
-  padding-top: clamp(1rem, 2vh, 1.5rem);
-  border-top: 1px solid var(--border-strong);
-}
-
-@media (max-width: 640px) {
-  .opening__tagline {
-    flex-direction: column;
-  }
-}
-
-.opening__line {
-  font-size: clamp(1.5rem, 3.4vw, 3.25rem);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--ink-secondary);
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUpIn 600ms var(--ease-out) forwards;
-}
-
-.opening__line[data-delay="1"] {
-  animation-delay: 120ms;
-}
-.opening__line[data-delay="2"] {
-  animation-delay: 180ms;
-}
-.opening__line[data-delay="3"] {
-  animation-delay: 240ms;
-}
-
-/* Wordmark letters behave like a selected layer in a design tool:
-   dashed outline, a selection box with corner handles, and the glyph's size */
-.glyph {
-  position: relative;
-  display: inline-block;
-  outline: 1px solid transparent;
-  transition: outline-color 150ms ease;
-}
-
-.glyph__ink {
-  display: inline-block;
-}
-
-.glyph::before,
-.glyph::after {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out);
-}
-
-/* Four corner handles centred on the selection box corners */
-.glyph::before {
-  content: '';
-  inset: -4px;
-  /* Each handle: a bone square (listed first, so on top) inside an accent square */
-  background:
-    linear-gradient(var(--surface), var(--surface)) left 1px top 1px / 6px 6px no-repeat,
-    linear-gradient(var(--surface), var(--surface)) right 1px top 1px / 6px 6px no-repeat,
-    linear-gradient(var(--surface), var(--surface)) left 1px bottom 1px / 6px 6px no-repeat,
-    linear-gradient(var(--surface), var(--surface)) right 1px bottom 1px / 6px 6px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) left top / 8px 8px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) right top / 8px 8px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) left bottom / 8px 8px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) right bottom / 8px 8px no-repeat;
-}
-
-/* Dimensions label, filled in by app.js once fonts have loaded */
-.glyph::after {
-  content: attr(data-size);
-  top: calc(100% + 10px);
-  left: 50%;
-  padding: 3px 6px;
-  border-radius: 3px;
-  background: var(--ink);
-  color: var(--surface);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.2;
-  white-space: nowrap;
-  transform: translate(-50%, -4px);
-}
-
-.glyph:not([data-size])::after {
-  display: none;
+.lang button[aria-pressed="true"] {
+  color: #fff;
+  box-shadow: inset 0 -1px 0 #fff;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .glyph:hover {
-    outline-color: var(--accent);
-  }
-
-  .glyph:hover::before,
-  .glyph:hover::after {
-    opacity: 1;
-  }
-
-  .glyph:hover::after {
-    transform: translate(-50%, 0);
-  }
-
-  .glyph:hover .glyph__ink {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--ink);
-    /* Diagonal stripes break the outline into dashes */
-    -webkit-mask-image: repeating-linear-gradient(-45deg, #000 0 6px, transparent 6px 10px);
-    mask-image: repeating-linear-gradient(-45deg, #000 0 6px, transparent 6px 10px);
+  .lang button:hover {
+    color: #fff;
   }
 }
 
-@keyframes fadeUpIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Hero — "We build ___": the name, then each word, drawn over the real guides of its typeface */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.5rem;
+  padding: 7rem clamp(1.5rem, 4vw, 4rem) 2.5rem;
+}
+
+.hero__lead {
+  align-self: end;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 7vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  transition: opacity 600ms ease;
+}
+
+.hero__spec {
+  align-self: center;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  overflow: visible;
+}
+
+.hero__spec .guide {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: draw 1.3s var(--ease-out) forwards;
+}
+
+.hero__spec .guide--v { stroke: rgba(255, 255, 255, 0.22); }
+.hero__spec .guide:nth-of-type(2) { animation-delay: 0.1s; }
+.hero__spec .guide:nth-of-type(3) { animation-delay: 0.2s; }
+.hero__spec .guide:nth-of-type(4) { animation-delay: 0.3s; }
+.hero__spec .guide:nth-of-type(5) { animation-delay: 0.4s; }
+
+.hero__spec .word {
+  fill: #fff;
+  fill-opacity: 0;
+  stroke: #fff;
+  stroke-width: 1.5;
+  stroke-dasharray: 4000;
+  stroke-dashoffset: 4000;
+}
+
+.hero__spec .tick {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: rgba(255, 255, 255, 0.55);
+  opacity: 0;
+  animation: show 0.6s 1.2s ease forwards;
+}
+
+.hero__spec .dim { stroke: rgba(255, 255, 255, 0.5); stroke-width: 1; }
+.hero__spec .dimline { transition: opacity 400ms ease; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes show { to { opacity: 1; } }
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hero__meta b {
+  font-weight: 400;
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .hero { padding-top: 6.5rem; }
+  .hero__spec .tick,
+  .hero__spec .dimline text { display: none; }
+  .hero__meta span:nth-child(2) { display: none; }
+  .nav__tagline { display: none; }
+  .corner { font-size: 1rem; }
+  .lang { margin-left: 0.4rem; padding-left: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark i { animation: none; }
+  .hero__spec .guide { stroke-dashoffset: 0; animation: none; }
+  .hero__spec .tick { opacity: 1; animation: none; }
+  .connect path { stroke-dashoffset: 0; animation: none; }
 }
 
 /* Philosophy */
@@ -1521,10 +1486,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: none;
   }
 
-  .opening__wordmark, .opening__line {
-    opacity: 1;
-    transform: none;
-  }
+  
 
   @view-transition {
     navigation: none;
