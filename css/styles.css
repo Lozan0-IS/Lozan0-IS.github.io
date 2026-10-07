@@ -1559,7 +1559,7 @@ html:not(.js) .scribble path {
   color: var(--ink-secondary);
 }
 
-/* Team — the founder's poster treatment at card size. A halftone dot portrait by default; the real photo shows on hover or tap. */
+/* Team — the founder's poster treatment at card size. An ASCII portrait by default; the real photo shows on hover or tap. */
 .team {
   padding: 0 clamp(1.5rem, 4vw, 4rem) var(--space-section);
 }

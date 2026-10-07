@@ -143,7 +143,10 @@ window.AKAI_ES = {
     // Team
     'The team': 'El equipo',
     'Developer': 'Desarrollador',
-    'Halftone portrait of pachu, made of white dots': 'Retrato de pachu en trama de puntos blancos',
+    'ASCII portrait of pachu, made of text characters': 'Retrato de pachu hecho con caracteres de texto',
+    'ASCII portrait of Carlit0.tec, made of text characters': 'Retrato de Carlit0.tec hecho con caracteres de texto',
+    'Show the real name': 'Ver el nombre real',
+    'AI & Automation': 'IA y automatización',
     'Show the real photo': 'Ver la foto real',
 
     // 404

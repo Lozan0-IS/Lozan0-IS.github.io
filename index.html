@@ -301,18 +301,26 @@
         </section>
 
         <!-- 6c. TEAM — same treatment as the founder: scribble over the eyes, nickname first, real name on reveal.
-             Dots by default, the real photo on hover or tap. Add the next person as another <li> -->
+             ASCII portrait by default, the real photo on hover or tap. Add the next person as another <li> -->
         <section class="team" id="team" aria-labelledby="team-title">
             <h2 class="meta-label" id="team-title">The team</h2>
             <ul class="team__list" role="list">
                 <li class="member">
                     <figure class="member__photo reveal" role="button" tabindex="0" aria-pressed="false" aria-label="Show the real photo">
-                        <img class="member__dots" src="/assets/team-pachu-dots.webp" alt="Halftone portrait of pachu, made of white dots" width="948" height="1184" loading="lazy">
+                        <img class="member__dots" src="/assets/team-pachu-ascii.webp" alt="ASCII portrait of pachu, made of text characters" width="948" height="1184" loading="lazy">
                         <img class="member__real" src="/assets/team-pachu.webp" alt="" width="474" height="592" loading="lazy">
                         <span class="founder__hint mono" aria-hidden="true">Tap the portrait</span>
                     </figure>
                     <p class="member__name" data-no-i18n><span class="name"><span class="name__nick">pachu</span><span class="name__real" aria-hidden="true">Joshua Matias</span></span></p>
                     <p class="member__role">Developer</p>
+                </li>
+                <li class="member">
+                    <figure class="member__photo reveal" role="button" tabindex="0" aria-pressed="false" aria-label="Show the real name">
+                        <img class="member__dots" src="/assets/team-carlos.webp" alt="ASCII portrait of Carlit0.tec, made of text characters" width="576" height="720" loading="lazy">
+                        <span class="founder__hint mono" aria-hidden="true">Tap the portrait</span>
+                    </figure>
+                    <p class="member__name" data-no-i18n><span class="name"><span class="name__nick">Carlit0.tec</span><span class="name__real" aria-hidden="true">Carlos de León</span></span></p>
+                    <p class="member__role">AI &amp; Automation</p>
                 </li>
             </ul>
         </section>
