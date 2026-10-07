@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 3. Active Section (nav link follows the section in view) ---
     const initActiveSection = () => {
-        const sections = ['studio', 'contact']
+        const sections = ['studio']
             .map(id => document.getElementById(id))
             .filter(Boolean);
         if (sections.length === 0) return;
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s ease';
         };
 
-        // Scoped to the contact section so the rest of the page does no layout reads on mousemove
+        // Scoped to the brief view so the rest of the page does no layout reads on mousemove
         section.addEventListener('mouseleave', release);
         section.addEventListener('mousemove', (e) => {
             const rect = link.getBoundingClientRect();
@@ -272,19 +272,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 14a. Connect opens a "let's talk" panel (a modal dialog: Esc, focus trap and focus return come with it). Without JS the link still goes to #contact ---
+    // --- 14a. Connect opens a "let's talk" panel (a modal dialog: Esc, focus trap and focus return come with it). Without JS the link opens the email app ---
     const initTalk = () => {
         const dialog = document.getElementById('talk');
         const trigger = document.querySelector('.connect');
         if (!dialog || !trigger || typeof dialog.showModal !== 'function') return;
 
+        const views = [...dialog.querySelectorAll('[data-view]')];
+        const show = (name) => {
+            views.forEach((v) => { v.hidden = v.dataset.view !== name; });
+            dialog.scrollTo(0, 0);
+        };
+
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
+            show('start');
             dialog.showModal();
         });
         dialog.querySelector('.talk__close').addEventListener('click', () => dialog.close());
         dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
-        dialog.querySelector('.talk__go').addEventListener('click', () => dialog.close());
+        dialog.querySelector('.talk__go').addEventListener('click', () => {
+            show('brief');
+            dialog.querySelector('.talk__back').focus();
+        });
+        dialog.querySelector('.talk__back').addEventListener('click', () => {
+            show('start');
+            dialog.querySelector('.talk__go').focus();
+        });
         dialog.querySelector('.talk__chip').addEventListener('click', () => dialog.close());
     };
 

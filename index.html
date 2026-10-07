@@ -54,7 +54,7 @@
         <a href="/" class="nav__logo" aria-label="AKAI — Home"><span class="mark" aria-hidden="true"><i></i><i></i></span></a>
         <p class="nav__tagline mono">Creative Intelligence Studio</p>
         <nav class="corner" aria-label="Main navigation">
-            <a class="connect" href="#contact" data-section="contact">
+            <a class="connect" href="mailto:hello@akai.do">
                 <svg viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path d="M10 22 C6 8, 40 2, 70 4 C104 6, 118 14, 112 26 C106 38, 60 38, 26 35 C10 33, 4 25, 10 13"/></svg>
                 <span>Connect</span>
             </a><span aria-hidden="true">,</span>
@@ -340,77 +340,6 @@
             </ul>
         </section>
 
-        <!-- 7. CONTACT — a guided brief instead of a blank page -->
-        <section class="contact" id="contact" aria-labelledby="contact-title">
-            <div class="contact__top">
-                <h2 class="contact__headline reveal" id="contact-title">
-                    <span class="contact__line">HAVE SOMETHING</span>
-                    <span class="contact__line">WORTH BUILDING?</span>
-                </h2>
-                <p class="contact__mark" aria-hidden="true">AKAI © 2026</p>
-            </div>
-
-            <div class="contact__info reveal">
-                <div>
-                    <span class="meta-label">STUDIO</span>
-                    <p>Creative Intelligence Studio</p>
-                </div>
-                <div>
-                    <span class="meta-label">LOCATION</span>
-                    <p>Santiago, Dominican Republic. Working globally.</p>
-                </div>
-                <div>
-                    <span class="meta-label">EMAIL</span>
-                    <p><a href="mailto:hello@akai.do" class="contact__email">hello@akai.do</a></p>
-                </div>
-            </div>
-
-            <div class="contact__body">
-            <p class="contact__intro reveal">Answer a few quick questions and your email app opens with the brief already written.</p>
-
-            <!-- Without JS the browser hands the form to the mail client; with JS, app.js composes a readable email.
-                 When a form service is chosen, point `action` at it and add an email field. -->
-            <form class="brief reveal" id="brief" action="mailto:hello@akai.do" method="post" enctype="text/plain" novalidate>
-                <fieldset class="brief__step">
-                    <legend class="brief__legend"><span class="brief__num">01</span> What do you need?</legend>
-                    <div class="brief__options">
-                        <label class="brief__option"><input type="radio" name="need" value="A brand or creative direction" required> A brand or creative direction</label>
-                        <label class="brief__option"><input type="radio" name="need" value="A website or digital experience"> A website or digital experience</label>
-                        <label class="brief__option"><input type="radio" name="need" value="A product, platform or internal tool"> A product, platform or internal tool</label>
-                        <label class="brief__option"><input type="radio" name="need" value="Automation or an intelligent system"> Automation or an intelligent system</label>
-                        <label class="brief__option"><input type="radio" name="need" value="Not sure yet"> Not sure yet, let's work it out</label>
-                    </div>
-                    <p class="brief__error" id="need-error" hidden>Pick the option closest to what you need.</p>
-                </fieldset>
-
-                <fieldset class="brief__step">
-                    <legend class="brief__legend"><span class="brief__num">02</span> Where are you with it?</legend>
-                    <div class="brief__options">
-                        <label class="brief__option"><input type="radio" name="stage" value="Just exploring"> Just exploring</label>
-                        <label class="brief__option"><input type="radio" name="stage" value="I have ideas taking shape"> Ideas taking shape</label>
-                        <label class="brief__option"><input type="radio" name="stage" value="I know exactly what I need"> I know exactly what I need</label>
-                    </div>
-                </fieldset>
-
-                <div class="brief__step">
-                    <label class="brief__legend" for="brief-name"><span class="brief__num">03</span> Your name</label>
-                    <input class="brief__input" id="brief-name" name="name" type="text" autocomplete="name">
-                </div>
-
-                <div class="brief__step">
-                    <label class="brief__legend" for="brief-note"><span class="brief__num">04</span> Anything we should know? <span class="brief__optional">Optional</span></label>
-                    <textarea class="brief__input brief__input--area" id="brief-note" name="note" rows="4"></textarea>
-                </div>
-
-                <button type="submit" class="contact__link" data-magnetic>
-                    <span class="contact__link-text">WRITE THE EMAIL</span>
-                    <span class="contact__link-arrow" aria-hidden="true">→</span>
-                </button>
-                <p class="brief__status" id="brief-status" role="status" aria-live="polite"></p>
-            </form>
-            </div>
-        </section>
-
     </main>
 
     <footer class="footer">
@@ -436,13 +365,14 @@
     <dialog class="talk" id="talk" aria-labelledby="talk-title">
         <button type="button" class="talk__close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         <div class="talk__inner">
+            <div class="talk__view" data-view="start">
             <p class="talk__eyebrow mono">LET'S TALK</p>
             <h2 class="talk__title" id="talk-title">Welcome! It's great to meet you.</h2>
             <div class="talk__cards">
                 <div class="talk__card">
                     <p class="talk__tag mono">COLLABORATION</p>
                     <p class="talk__text">I'm interested in working together.</p>
-                    <a class="talk__go" href="#contact" aria-label="Start a project: go to the brief"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                    <button type="button" class="talk__go" aria-label="Start a project: go to the brief"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
                 </div>
                 <div class="talk__card">
                     <p class="talk__tag mono">ANYTHING ELSE</p>
@@ -450,6 +380,76 @@
                     <div class="talk__chips">
                         <a class="talk__chip mono" href="mailto:hello@akai.do"><span>EMAIL</span><span data-no-i18n>hello@akai.do</span></a>
                     </div>
+                </div>
+            </div>
+            </div>
+            <div class="talk__view contact" data-view="brief" hidden>
+                <button type="button" class="talk__back mono"><span aria-hidden="true">←</span> Back</button>
+                <div class="contact__top">
+                    <h2 class="contact__headline" id="contact-title">
+                        <span class="contact__line">HAVE SOMETHING</span>
+                        <span class="contact__line">WORTH BUILDING?</span>
+                    </h2>
+                </div>
+    
+                <div class="contact__info">
+                    <div>
+                        <span class="meta-label">STUDIO</span>
+                        <p>Creative Intelligence Studio</p>
+                    </div>
+                    <div>
+                        <span class="meta-label">LOCATION</span>
+                        <p>Santiago, Dominican Republic. Working globally.</p>
+                    </div>
+                    <div>
+                        <span class="meta-label">EMAIL</span>
+                        <p><a href="mailto:hello@akai.do" class="contact__email">hello@akai.do</a></p>
+                    </div>
+                </div>
+    
+                <div class="contact__body">
+                <p class="contact__intro">Answer a few quick questions and your email app opens with the brief already written.</p>
+    
+                <!-- Without JS the browser hands the form to the mail client; with JS, app.js composes a readable email.
+                     When a form service is chosen, point `action` at it and add an email field. -->
+                <form class="brief" id="brief" action="mailto:hello@akai.do" method="post" enctype="text/plain" novalidate>
+                    <fieldset class="brief__step">
+                        <legend class="brief__legend"><span class="brief__num">01</span> What do you need?</legend>
+                        <div class="brief__options">
+                            <label class="brief__option"><input type="radio" name="need" value="A brand or creative direction" required> A brand or creative direction</label>
+                            <label class="brief__option"><input type="radio" name="need" value="A website or digital experience"> A website or digital experience</label>
+                            <label class="brief__option"><input type="radio" name="need" value="A product, platform or internal tool"> A product, platform or internal tool</label>
+                            <label class="brief__option"><input type="radio" name="need" value="Automation or an intelligent system"> Automation or an intelligent system</label>
+                            <label class="brief__option"><input type="radio" name="need" value="Not sure yet"> Not sure yet, let's work it out</label>
+                        </div>
+                        <p class="brief__error" id="need-error" hidden>Pick the option closest to what you need.</p>
+                    </fieldset>
+    
+                    <fieldset class="brief__step">
+                        <legend class="brief__legend"><span class="brief__num">02</span> Where are you with it?</legend>
+                        <div class="brief__options">
+                            <label class="brief__option"><input type="radio" name="stage" value="Just exploring"> Just exploring</label>
+                            <label class="brief__option"><input type="radio" name="stage" value="I have ideas taking shape"> Ideas taking shape</label>
+                            <label class="brief__option"><input type="radio" name="stage" value="I know exactly what I need"> I know exactly what I need</label>
+                        </div>
+                    </fieldset>
+    
+                    <div class="brief__step">
+                        <label class="brief__legend" for="brief-name"><span class="brief__num">03</span> Your name</label>
+                        <input class="brief__input" id="brief-name" name="name" type="text" autocomplete="name">
+                    </div>
+    
+                    <div class="brief__step">
+                        <label class="brief__legend" for="brief-note"><span class="brief__num">04</span> Anything we should know? <span class="brief__optional">Optional</span></label>
+                        <textarea class="brief__input brief__input--area" id="brief-note" name="note" rows="4"></textarea>
+                    </div>
+    
+                    <button type="submit" class="contact__link" data-magnetic>
+                        <span class="contact__link-text">WRITE THE EMAIL</span>
+                        <span class="contact__link-arrow" aria-hidden="true">→</span>
+                    </button>
+                    <p class="brief__status" id="brief-status" role="status" aria-live="polite"></p>
+                </form>
                 </div>
             </div>
         </div>

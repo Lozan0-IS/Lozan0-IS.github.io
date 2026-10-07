@@ -1537,6 +1537,30 @@ html:has(.talk[open]) { overflow: hidden; }
   transition: background 180ms ease;
 }
 
+.talk__view[hidden] { display: none; }
+
+/* The brief view reuses the old contact-section styles, minus the page-level padding */
+.talk .contact { padding: 0; }
+
+.talk__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.talk__back:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
 @media (max-width: 760px) {
   .talk__cards { grid-template-columns: 1fr; }
   .talk__card { min-height: 15rem; padding: 1.5rem; }
