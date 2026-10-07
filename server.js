@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -20,6 +20,14 @@ const MIME_TYPES = {
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
   '.ico': 'image/x-icon'
+};
+
+// Missing pages get the site's own 404.html, as on GitHub Pages
+const notFound = (res) => {
+  fs.readFile(path.join(__dirname, '404.html'), (err, page) => {
+    res.writeHead(404, { 'Content-Type': 'text/html' });
+    res.end(err ? '<h1>404 Not Found</h1>' : page, 'utf-8');
+  });
 };
 
 const server = http.createServer((req, res) => {
@@ -40,8 +48,7 @@ const server = http.createServer((req, res) => {
   // Never serve dotfiles/dot-folders (.claude holds private project state) or files outside the site root
   const relative = path.relative(__dirname, filePath);
   if (relative.startsWith('..') || relative.split(path.sep).some(part => part.startsWith('.')) || relative === 'server.js') {
-    res.writeHead(404, { 'Content-Type': 'text/html' });
-    res.end('<h1>404 Not Found</h1>', 'utf-8');
+    notFound(res);
     return;
   }
 
@@ -56,8 +63,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === 'ENOENT' || err.code === 'EISDIR') {
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end('<h1>404 Not Found</h1>', 'utf-8');
+        notFound(res);
       } else {
         res.writeHead(500);
         res.end(`Server Error: ${err.code}`);
@@ -70,5 +76,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log('AKAI Digital Intelligence \u2014 http://localhost:3000');
+  console.log(`AKAI \u2014 http://localhost:${PORT}`);
 });

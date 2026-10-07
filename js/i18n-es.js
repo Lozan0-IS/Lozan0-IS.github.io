@@ -12,7 +12,7 @@ window.AKAI_ES = {
 
     // Hero
     'We build': 'Construimos',
-    'AKAI — We build brands, websites, platforms, automations and experiences.': 'AKAI — Construimos marcas, sitios web, plataformas, automatizaciones y experiencias.',
+    'brands, websites, platforms, automations and experiences.': 'marcas, sitios web, plataformas, automatizaciones y experiencias.',
 
     // Philosophy
     'Our philosophy': 'Nuestra filosofía',
@@ -111,6 +111,11 @@ window.AKAI_ES = {
     'Santiago, Dominican Republic': 'Santiago, República Dominicana',
     'Email': 'Correo',
     'No cookie banner here, because there is nothing to consent to: no cookies, no analytics, no third-party requests.': 'Aquí no hay banner de cookies porque no hay nada que consentir: sin cookies, sin analítica y sin peticiones a terceros.',
+
+    // 404
+    'Page not found': 'Página no encontrada',
+    'This page does not exist. It may have moved, or the address has a typo.': 'Esta página no existe. Puede que se haya movido o que la dirección tenga un error.',
+    'BACK TO HOME': 'VOLVER AL INICIO',
 
     // Messages written by the script
     'Hi AKAI,': 'Hola AKAI,',

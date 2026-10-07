@@ -334,7 +334,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 0.9rem;
   padding-left: 0.9rem;
   border-left: 1px solid rgba(255, 255, 255, 0.32);
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .lang button {
@@ -450,8 +450,18 @@ h1, h2, h3, h4, h5, h6 {
   .lang { margin-left: 0.4rem; padding-left: 0.5rem; }
 }
 
+/* Narrowest phones: a smaller icon and tighter menu so the two never touch (measured down to 320px) */
+@media (max-width: 400px) {
+  .nav { --logo: 48px; }
+  .corner { gap: 0.15rem; font-size: 0.9375rem; }
+  .connect { padding: 0 0.5rem; }
+  .lang { margin-left: 0.25rem; padding-left: 0.3rem; }
+  .lang button { min-width: 32px; padding: 0 2px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .mark i { animation: none; }
+  .mark i:nth-child(1),
+  .mark i:nth-child(2) { animation: none; }
   .hero__spec .guide { stroke-dashoffset: 0; animation: none; }
   .hero__spec .tick { opacity: 1; animation: none; }
   .connect path { stroke-dashoffset: 0; animation: none; }
@@ -1334,6 +1344,31 @@ h1, h2, h3, h4, h5, h6 {
   .footer__content {
     flex-direction: column;
   }
+}
+
+/* 404 */
+.notfound {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.5rem;
+  padding: 7rem clamp(1.5rem, 4vw, 4rem) 4rem;
+}
+
+.notfound__title {
+  font-size: clamp(3rem, 11vw, 11rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.notfound__text {
+  max-width: 34rem;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--ink-secondary);
 }
 
 /* Reduced Motion */
