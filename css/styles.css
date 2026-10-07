@@ -445,7 +445,6 @@ h1, h2, h3, h4, h5, h6 {
   .hero { padding-top: 6.5rem; }
   .hero__spec .tick,
   .hero__spec .dimline text { display: none; }
-  .hero__meta span:nth-child(2) { display: none; }
   .nav__tagline { display: none; }
   .corner { font-size: 1rem; }
   .lang { margin-left: 0.4rem; padding-left: 0.5rem; }

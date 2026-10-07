@@ -12,8 +12,7 @@ window.AKAI_ES = {
 
     // Hero
     'We build': 'Construimos',
-    'AKAI — We build brands, websites, platforms, automations and experiences. Technology is our medium. The experience is the result.': 'AKAI — Construimos marcas, sitios web, plataformas, automatizaciones y experiencias. La tecnología es nuestro medio. La experiencia es el resultado.',
-    'Technology is our medium. The experience is the result.': 'La tecnología es nuestro medio. La experiencia es el resultado.',
+    'AKAI — We build brands, websites, platforms, automations and experiences.': 'AKAI — Construimos marcas, sitios web, plataformas, automatizaciones y experiencias.',
 
     // Philosophy
     'Our philosophy': 'Nuestra filosofía',
