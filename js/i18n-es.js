@@ -113,7 +113,7 @@ window.AKAI_ES = {
 
     // Founder
     'The person behind AKAI': 'La persona detrás de AKAI',
-    'Portrait of Alan I. Lozano, with a hand-drawn scribble over the eyes': 'Retrato de Alan I. Lozano, con un garabato dibujado a mano sobre los ojos',
+    'Portrait of lozan0.is, with a hand-drawn scribble over the eyes': 'Retrato de lozan0.is, con un garabato dibujado a mano sobre los ojos',
     'Founder & Creative Director': 'Fundador y director creativo',
     'A studio by': 'Un estudio de',
     'Show the portrait without the scribble': 'Ver el retrato sin el garabato',

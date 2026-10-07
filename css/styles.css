@@ -1384,10 +1384,18 @@ body::before {
   justify-self: end;
 }
 
-.founder__label--l span {
+.founder__label--l .name {
   white-space: nowrap;
-  display: inline-block;
   transform: skewX(-12deg);
+}
+
+.founder__label--l .name > * {
+  justify-self: end;
+}
+
+.founder__label--l .name__nick {
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 
 .founder__label--r {
@@ -1487,6 +1495,35 @@ html:not(.js) .scribble path {
   .founder__photo.is-revealed .founder__hint {
     opacity: 0;
   }
+}
+
+/* A name that swaps: the nickname by default, the real name when the portrait is revealed or the name is hovered */
+.name {
+  display: inline-grid;
+}
+
+.name > * {
+  grid-area: 1 / 1;
+  transition: opacity 300ms ease, transform 300ms var(--ease-out);
+}
+
+.name__real {
+  opacity: 0;
+  transform: translateY(0.35em);
+}
+
+.founder.is-revealed .name__nick,
+.founder:has(.founder__photo:hover) .name__nick,
+.name:hover .name__nick {
+  opacity: 0;
+  transform: translateY(-0.35em);
+}
+
+.founder.is-revealed .name__real,
+.founder:has(.founder__photo:hover) .name__real,
+.name:hover .name__real {
+  opacity: 1;
+  transform: none;
 }
 
 .founder__credits {

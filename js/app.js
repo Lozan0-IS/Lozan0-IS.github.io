@@ -277,8 +277,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const photo = document.querySelector('.founder__photo[role="button"]');
         if (!photo) return;
 
+        const section = photo.closest('.founder');
         const toggle = () => {
             const revealed = photo.classList.toggle('is-revealed');
+            section.classList.toggle('is-revealed', revealed);
             photo.setAttribute('aria-pressed', String(revealed));
         };
 
