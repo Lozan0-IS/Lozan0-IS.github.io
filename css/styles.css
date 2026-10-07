@@ -1559,6 +1559,90 @@ html:not(.js) .scribble path {
   color: var(--ink-secondary);
 }
 
+/* Team — the founder's poster treatment at card size. The scribble is cloned in by JS, so it is scaled to a face rather than a whole frame. */
+.team {
+  padding: 0 clamp(1.5rem, 4vw, 4rem) var(--space-section);
+}
+
+.team__list {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 18rem));
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.team .meta-label {
+  text-align: center;
+}
+
+.member__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+
+.member__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1) brightness(0.85);
+}
+
+.member__photo .scribble {
+  top: 29%;
+  width: 62%;
+}
+
+.member__photo:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+
+.member__photo.is-visible .scribble path {
+  animation: scribble-draw 1.3s 0.35s var(--ease-out) forwards;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .member__photo:hover .scribble { opacity: 0; }
+}
+
+.member__photo.is-revealed .scribble { opacity: 0; }
+
+@media (hover: none) {
+  .member__photo.is-revealed .founder__hint { opacity: 0; }
+}
+
+.member:has(.member__photo:hover) .name__nick,
+.member.is-revealed .name__nick {
+  opacity: 0;
+  transform: translateY(-0.35em);
+}
+
+.member:has(.member__photo:hover) .name__real,
+.member.is-revealed .name__real {
+  opacity: 1;
+  transform: none;
+}
+
+.member__name {
+  margin: 1rem 0 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.member__role {
+  margin: 0.25rem 0 0;
+  font-size: var(--text-meta);
+  color: var(--ink-secondary);
+}
+
 @media (max-width: 760px) {
   .founder__stage {
     grid-template-columns: 1fr;

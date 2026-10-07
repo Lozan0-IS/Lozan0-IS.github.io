@@ -133,6 +133,11 @@ window.AKAI_ES = {
     'Show the portrait without the scribble': 'Ver el retrato sin el garabato',
     'Tap the portrait': 'Toca el retrato',
 
+    // Team
+    'The team': 'El equipo',
+    'Developer': 'Desarrollador',
+    'Portrait of pachu, with a hand-drawn scribble over the eyes': 'Retrato de pachu, con un garabato dibujado a mano sobre los ojos',
+
     // 404
     'Page not found': 'Página no encontrada',
     'This page does not exist. It may have moved, or the address has a typo.': 'Esta página no existe. Puede que se haya movido o que la dirección tenga un error.',

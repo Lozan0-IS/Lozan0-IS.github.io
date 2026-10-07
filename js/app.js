@@ -272,24 +272,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 15. Founder portrait: tap, click or Enter/Space lifts the scribble (hover does it too, in CSS) ---
+    // --- 15. Founder and team portraits: tap, click or Enter/Space lifts the scribble (hover does it too, in CSS) ---
     const initFounder = () => {
-        const photo = document.querySelector('.founder__photo[role="button"]');
-        if (!photo) return;
+        const scribble = document.querySelector('.founder__photo .scribble');
 
-        const section = photo.closest('.founder');
-        const toggle = () => {
-            const revealed = photo.classList.toggle('is-revealed');
-            section.classList.toggle('is-revealed', revealed);
-            photo.setAttribute('aria-pressed', String(revealed));
-        };
+        document.querySelectorAll('.member__photo').forEach((photo) => {
+            if (scribble) photo.append(scribble.cloneNode(true));
+        });
 
-        photo.addEventListener('click', toggle);
-        photo.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggle();
-            }
+        document.querySelectorAll('.founder__photo[role="button"], .member__photo[role="button"]').forEach((photo) => {
+            const group = photo.closest('.founder, .member');
+            const toggle = () => {
+                const revealed = photo.classList.toggle('is-revealed');
+                group.classList.toggle('is-revealed', revealed);
+                photo.setAttribute('aria-pressed', String(revealed));
+            };
+
+            photo.addEventListener('click', toggle);
+            photo.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
         });
     };
 

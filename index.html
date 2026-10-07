@@ -286,6 +286,22 @@
             </div>
         </section>
 
+        <!-- 6c. TEAM — same treatment as the founder: scribble over the eyes, nickname first, real name on reveal.
+             The scribble SVG is cloned from the founder's by initTeam(). Add the next person as another <li> -->
+        <section class="team" id="team" aria-labelledby="team-title">
+            <h2 class="meta-label" id="team-title">The team</h2>
+            <ul class="team__list" role="list">
+                <li class="member">
+                    <figure class="member__photo reveal" role="button" tabindex="0" aria-pressed="false" aria-label="Show the portrait without the scribble">
+                        <img src="/assets/team-pachu.webp" alt="Portrait of pachu, with a hand-drawn scribble over the eyes" width="474" height="592" loading="lazy">
+                        <span class="founder__hint mono" aria-hidden="true">Tap the portrait</span>
+                    </figure>
+                    <p class="member__name" data-no-i18n><span class="name"><span class="name__nick">pachu</span><span class="name__real" aria-hidden="true">Joshua Matias</span></span></p>
+                    <p class="member__role">Developer</p>
+                </li>
+            </ul>
+        </section>
+
         <!-- 7. CONTACT — a guided brief instead of a blank page -->
         <section class="contact" id="contact" aria-labelledby="contact-title">
             <div class="contact__top">
