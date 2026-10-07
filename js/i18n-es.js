@@ -132,6 +132,16 @@ window.AKAI_ES = {
     'Brand and digital experience for a production company:': 'Marca y experiencia digital para una productora:',
     'portfolio, video, artists and booking.': 'portafolio, video, artistas y reservas.',
 
+    // Talk panel
+    "LET'S TALK": 'HABLEMOS',
+    "Welcome! It's great to meet you.": '¡Te damos la bienvenida! Qué gusto conocerte.',
+    'COLLABORATION': 'COLABORACIÓN',
+    "I'm interested in working together.": 'Me interesa que trabajemos juntos.',
+    'ANYTHING ELSE': 'ALGO MÁS',
+    'Just saying hi.': 'Solo vengo a saludar.',
+    'Close': 'Cerrar',
+    'Start a project: go to the brief': 'Empezar un proyecto: ir al brief',
+
     // Credo
     'Everything we do is born inside AKAI.': 'Todo lo que hacemos nace dentro de AKAI.',
     'We combine strategy, creativity and technology to turn ambitious ideas into experiences that are felt, that work and that last.': 'Combinamos estrategia, creatividad y tecnología para transformar ideas ambiciosas en experiencias que se sienten, funcionan y perduran.',

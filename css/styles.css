@@ -1359,6 +1359,194 @@ body::before {
   }
 }
 
+/* Talk panel — what Connect opens: a full-screen dark veil with two doors, a project brief or a plain hello */
+html:has(.talk[open]) { overflow: hidden; }
+
+.talk {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  overflow-y: auto;
+}
+
+.talk::backdrop {
+  background: rgba(0, 0, 0, 0.82);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+}
+
+.talk[open] { animation: talk-in 260ms var(--ease-out); }
+.talk[open]::backdrop { animation: talk-fade 260ms ease; }
+
+@keyframes talk-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes talk-fade { from { opacity: 0; } }
+
+.talk__inner {
+  box-sizing: border-box;
+  min-height: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(6rem, 18vh, 12rem) clamp(1.5rem, 4vw, 4rem) 4rem;
+}
+
+.talk__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.75rem;
+}
+
+.talk__eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+}
+
+.talk__title {
+  margin: 0;
+  max-width: 16ch;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.talk__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+
+.talk__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 21rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.talk__tag {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 0.6875rem;
+}
+
+.talk__tag::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.talk__text {
+  margin: 1.5rem 0 0;
+  max-width: 14ch;
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.talk__go,
+.talk__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.talk__go {
+  width: 56px;
+  height: 56px;
+  margin-top: auto;
+}
+
+.talk__go svg,
+.talk__close svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.talk__close {
+  position: fixed;
+  top: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.talk__go:focus-visible,
+.talk__close:focus-visible,
+.talk__chip:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .talk__go:hover,
+  .talk__close:hover { background: #fff; color: #000; }
+  .talk__chip:hover { background: rgba(255, 255, 255, 0.28); }
+}
+
+.talk__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+.talk__chip {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.9rem;
+  min-height: 44px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 0.6875rem;
+  text-decoration: none;
+  transition: background 180ms ease;
+}
+
+@media (max-width: 760px) {
+  .talk__cards { grid-template-columns: 1fr; }
+  .talk__card { min-height: 15rem; padding: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talk[open],
+  .talk[open]::backdrop { animation: none; }
+}
+
 /* Credo — a statement, then a headline of letters that can be cut. Pointer-driven, so a reduced-motion visitor just gets the headline. */
 .credo {
   padding: var(--space-section) clamp(1.5rem, 4vw, 4rem) 0;

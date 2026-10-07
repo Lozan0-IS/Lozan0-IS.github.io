@@ -272,6 +272,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- 14a. Connect opens a "let's talk" panel (a modal dialog: Esc, focus trap and focus return come with it). Without JS the link still goes to #contact ---
+    const initTalk = () => {
+        const dialog = document.getElementById('talk');
+        const trigger = document.querySelector('.connect');
+        if (!dialog || !trigger || typeof dialog.showModal !== 'function') return;
+
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            dialog.showModal();
+        });
+        dialog.querySelector('.talk__close').addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+        dialog.querySelector('.talk__go').addEventListener('click', () => dialog.close());
+        dialog.querySelector('.talk__chip').addEventListener('click', () => dialog.close());
+    };
+
     // --- 14b. Credo headline: letters you can cut by dragging across them. A cut letter falls, turns to dust on the floor and pours back in ---
     const initSand = () => {
         const title = document.querySelector('.sand');
@@ -672,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     initLanguage();
     initHero();
+    initTalk();
     initSand();
     initFounder();
     initCases();
