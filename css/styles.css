@@ -1359,6 +1359,79 @@ body::before {
   }
 }
 
+/* Credo — a statement, then a headline of letters that can be cut. Pointer-driven, so a reduced-motion visitor just gets the headline. */
+.credo {
+  padding: var(--space-section) clamp(1.5rem, 4vw, 4rem) 0;
+}
+
+.credo__lead {
+  font-size: var(--text-title);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 18ch;
+}
+
+.credo__body {
+  display: grid;
+  gap: 1rem;
+  max-width: 36rem;
+  margin: 2rem 0 clamp(3rem, 8vw, 6rem) auto;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.credo__body p { margin: 0; }
+
+.sand {
+  position: relative;
+  margin: 0;
+  font-size: clamp(2.5rem, 6.4vw, 7rem);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+
+.sand:active { cursor: grabbing; }
+
+.sand__glyphs { display: block; }
+.sand__line { display: block; }
+.sand__word { display: inline-block; white-space: nowrap; }
+
+.sand__ch {
+  display: inline-block;
+  will-change: transform;
+}
+
+.sand__dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sand__grain {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 3px;
+  background: var(--ink);
+}
+
+.sand__hint {
+  margin: 1.5rem 0 0;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 760px) {
+  .credo__body { margin-left: 0; }
+}
+
 /* Founder — a portrait treated like a film poster: grayscale, a hand-drawn scribble over the eyes,
    name and role flanking it, credits underneath. The scribble lifts on hover so a visitor can see the face. */
 .founder {

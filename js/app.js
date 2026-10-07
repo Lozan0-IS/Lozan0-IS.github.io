@@ -272,6 +272,151 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- 14b. Credo headline: letters you can cut by dragging across them. A cut letter falls, turns to dust on the floor and pours back in ---
+    const initSand = () => {
+        const title = document.querySelector('.sand');
+        if (!title) return;
+        const glyphs = title.querySelector('.sand__glyphs');
+        const dust = title.querySelector('.sand__dust');
+        const sourceLines = title.dataset.lines.split('|');
+        const canSlice = !prefersReducedMotion;
+        if (!canSlice) title.closest('.credo').querySelector('.sand__hint').hidden = true;
+
+        const GRAVITY = 0.55, FLOOR_GAP = 110, RETURN_MS = 520;
+        let letters = [], grains = [], raf = 0, last = 0;
+
+        const build = () => {
+            letters = [];
+            grains.forEach((g) => g.el.remove());
+            grains = [];
+            glyphs.replaceChildren(...sourceLines.map((line) => {
+                const row = document.createElement('span');
+                row.className = 'sand__line';
+                t(line).split(' ').forEach((word, wi) => {
+                    if (wi) row.append(' ');
+                    const w = document.createElement('span');
+                    w.className = 'sand__word';
+                    [...word].forEach((ch) => {
+                        const el = document.createElement('span');
+                        el.className = 'sand__ch';
+                        el.textContent = ch;
+                        w.append(el);
+                        letters.push({ el, state: 'idle', x: 0, y: 0, vx: 0, vy: 0, r: 0, vr: 0, floor: 0, wake: 0, born: 0 });
+                    });
+                    row.append(w);
+                });
+                return row;
+            }));
+        };
+
+        const cut = (L, dx, now) => {
+            const lr = L.el.getBoundingClientRect();
+            const tr = title.getBoundingClientRect();
+            L.state = 'fall';
+            L.x = L.y = L.r = 0;
+            L.vx = dx * 0.05 + (Math.random() - 0.5) * 2;
+            L.vy = -3 - Math.random() * 3;
+            L.vr = (Math.random() - 0.5) * 9;
+            L.floor = tr.bottom + FLOOR_GAP - lr.bottom;
+            L.cx = lr.left + lr.width / 2 - tr.left;
+            L.cy = tr.bottom + FLOOR_GAP - tr.top;
+            L.size = lr.width;
+            start(now);
+        };
+
+        const crumble = (L, now) => {
+            L.state = 'gone';
+            L.el.style.opacity = '0';
+            L.wake = now + 900 + Math.random() * 900;
+            for (let k = 0; k < 9; k++) {
+                const el = document.createElement('span');
+                el.className = 'sand__grain';
+                dust.append(el);
+                grains.push({ el, x: L.cx + (Math.random() - 0.5) * L.size, y: L.cy, vx: (Math.random() - 0.5) * 5, vy: -2 - Math.random() * 4, born: now });
+            }
+        };
+
+        const step = (now) => {
+            const k = Math.min(2.5, (now - last) / 16.67);
+            last = now;
+            let busy = false;
+
+            letters.forEach((L) => {
+                if (L.state === 'fall') {
+                    busy = true;
+                    L.vy += GRAVITY * k;
+                    L.x += L.vx * k;
+                    L.y += L.vy * k;
+                    L.r += L.vr * k;
+                    if (L.y >= L.floor) crumble(L, now);
+                    else L.el.style.transform = `translate(${L.x}px, ${L.y}px) rotate(${L.r}deg)`;
+                } else if (L.state === 'gone') {
+                    busy = true;
+                    if (now >= L.wake) { L.state = 'pour'; L.born = now; }
+                } else if (L.state === 'pour') {
+                    busy = true;
+                    const p = Math.min(1, (now - L.born) / RETURN_MS);
+                    const e = 1 - Math.pow(1 - p, 3);
+                    L.el.style.opacity = String(e);
+                    L.el.style.transform = `translateY(${(-70 * (1 - e)).toFixed(1)}px)`;
+                    if (p === 1) { L.state = 'idle'; L.el.style.transform = ''; L.el.style.opacity = ''; }
+                }
+            });
+
+            grains = grains.filter((g) => {
+                const age = now - g.born;
+                if (age > 1100) { g.el.remove(); return false; }
+                g.vy += GRAVITY * 0.6 * k;
+                g.x += g.vx * k;
+                g.y += g.vy * k;
+                g.el.style.transform = `translate(${g.x}px, ${g.y}px)`;
+                g.el.style.opacity = String(1 - age / 1100);
+                return true;
+            });
+            if (grains.length) busy = true;
+
+            raf = busy ? requestAnimationFrame(step) : 0;
+        };
+        const start = (now) => {
+            if (!raf) { last = now; raf = requestAnimationFrame(step); }
+        };
+
+        if (canSlice) {
+            let down = false, px = 0, py = 0, rects = [];
+            const cacheRects = () => { rects = letters.map((L) => L.el.getBoundingClientRect()); };
+
+            title.addEventListener('pointerdown', (e) => {
+                if (e.button) return;
+                down = true;
+                px = e.clientX;
+                py = e.clientY;
+                cacheRects();
+                title.setPointerCapture(e.pointerId);
+            });
+            title.addEventListener('pointermove', (e) => {
+                if (!down) return;
+                const dx = e.clientX - px, dy = e.clientY - py;
+                const n = Math.max(1, Math.ceil(Math.hypot(dx, dy) / 6));
+                for (let s = 1; s <= n; s++) {
+                    const x = px + (dx * s) / n, y = py + (dy * s) / n;
+                    letters.forEach((L, i) => {
+                        const r = rects[i];
+                        if (L.state === 'idle' && x >= r.left - 2 && x <= r.right + 2 && y >= r.top - 2 && y <= r.bottom + 2) cut(L, dx, e.timeStamp);
+                    });
+                }
+                px = e.clientX;
+                py = e.clientY;
+            });
+            const up = () => { down = false; };
+            title.addEventListener('pointerup', up);
+            title.addEventListener('pointercancel', up);
+            window.addEventListener('resize', () => { if (down) cacheRects(); });
+        }
+
+        build();
+        document.addEventListener('akai:lang', build);
+    };
+
     // --- 15. Founder and team portraits: tap, click or Enter/Space lifts the scribble (hover does it too, in CSS) ---
     const initFounder = () => {
         document.querySelectorAll('.founder__photo[role="button"], .member__photo[role="button"]').forEach((photo) => {
@@ -527,6 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     initLanguage();
     initHero();
+    initSand();
     initFounder();
     initCases();
     initActiveSection();

@@ -132,6 +132,15 @@ window.AKAI_ES = {
     'Brand and digital experience for a production company:': 'Marca y experiencia digital para una productora:',
     'portfolio, video, artists and booking.': 'portafolio, video, artistas y reservas.',
 
+    // Credo
+    'Everything we do is born inside AKAI.': 'Todo lo que hacemos nace dentro de AKAI.',
+    'We combine strategy, creativity and technology to turn ambitious ideas into experiences that are felt, that work and that last.': 'Combinamos estrategia, creatividad y tecnología para transformar ideas ambiciosas en experiencias que se sienten, funcionan y perduran.',
+    'We work from start to finish, alongside our partners, with an obsession for every detail.': 'Trabajamos de principio a fin, junto a nuestros socios, con una obsesión por cada detalle.',
+    'Ideas are only the beginning. We build what comes next.': 'Las ideas son solo el comienzo. Construimos lo que viene después.',
+    'Ideas are only the beginning.': 'Las ideas son solo el comienzo.',
+    'We build what comes next.': 'Construimos lo que viene después.',
+    'Drag across the headline to cut it': 'Arrastra sobre el titular para cortarlo',
+
     // Founder
     'The person behind AKAI': 'La persona detrás de AKAI',
     'Portrait of lozan0.is, with a hand-drawn scribble over the eyes': 'Retrato de lozan0.is, con un garabato dibujado a mano sobre los ojos',
