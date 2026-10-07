@@ -111,6 +111,12 @@ window.AKAI_ES = {
     'Santiago, Dominican Republic': 'Santiago, República Dominicana',
     'No cookie banner here, because there is nothing to consent to: no cookies, no analytics, no third-party requests.': 'Aquí no hay banner de cookies porque no hay nada que consentir: sin cookies, sin analítica y sin peticiones a terceros.',
 
+    // Founder
+    'The person behind AKAI': 'La persona detrás de AKAI',
+    'Portrait of Alan I. Lozano, with a hand-drawn scribble over the eyes': 'Retrato de Alan I. Lozano, con un garabato dibujado a mano sobre los ojos',
+    'Founder & Creative Director': 'Fundador y director creativo',
+    'A studio by': 'Un estudio de',
+
     // 404
     'Page not found': 'Página no encontrada',
     'This page does not exist. It may have moved, or the address has a typo.': 'Esta página no existe. Puede que se haya movido o que la dirección tenga un error.',

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const originals = new WeakMap();
         const attrOriginals = new WeakMap();
         const SKIP = 'script, style, svg, textarea, [data-no-i18n]';
-        const ATTRS = ['aria-label', 'placeholder', 'title'];
+        const ATTRS = ['aria-label', 'placeholder', 'title', 'alt'];
 
         const apply = () => {
             document.documentElement.lang = lang;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 node.nodeValue = es === undefined ? original : original.match(/^\s*/)[0] + es + original.match(/\s*$/)[0];
             }
 
-            document.querySelectorAll('[aria-label], [placeholder], [title]').forEach((el) => {
+            document.querySelectorAll('[aria-label], [placeholder], [title], [alt]').forEach((el) => {
                 if (el.closest('[data-no-i18n]')) return;
                 const saved = attrOriginals.get(el) || {};
                 ATTRS.forEach((attr) => {
