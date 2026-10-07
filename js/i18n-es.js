@@ -119,6 +119,13 @@ window.AKAI_ES = {
     'Portfolio': 'Portafolio',
     'Book maintenance': 'Reservar mantenimiento',
     'Book a project': 'Reservar un proyecto',
+    'HARDWARE': 'FERRETERÍA',
+    'Sales (POS)': 'Ventas (POS)',
+    'AI assistants': 'Asistentes de IA',
+    'Electronic invoices': 'Facturas electrónicas',
+    'Receipt': 'Recibo',
+    'A multi-company sales system for hardware stores: ': 'Un sistema de ventas multiempresa para ferreterías: ',
+    'point of sale, inventory, accounting and AI agents.': 'punto de venta, inventario, contabilidad y agentes de IA.',
     'Open the live page': 'Abrir la página en vivo',
     'Digital experience for a Can-Am / UTV company:': 'Experiencia digital para una empresa Can-Am / UTV:',
     'showcase, booking and administration.': 'vitrina, reservas y administración.',
@@ -136,7 +143,8 @@ window.AKAI_ES = {
     // Team
     'The team': 'El equipo',
     'Developer': 'Desarrollador',
-    'Portrait of pachu, with a hand-drawn scribble over the eyes': 'Retrato de pachu, con un garabato dibujado a mano sobre los ojos',
+    'Halftone portrait of pachu, made of white dots': 'Retrato de pachu en trama de puntos blancos',
+    'Show the real photo': 'Ver la foto real',
 
     // 404
     'Page not found': 'Página no encontrada',

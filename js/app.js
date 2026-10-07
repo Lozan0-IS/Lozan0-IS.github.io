@@ -274,12 +274,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 15. Founder and team portraits: tap, click or Enter/Space lifts the scribble (hover does it too, in CSS) ---
     const initFounder = () => {
-        const scribble = document.querySelector('.founder__photo .scribble');
-
-        document.querySelectorAll('.member__photo').forEach((photo) => {
-            if (scribble) photo.append(scribble.cloneNode(true));
-        });
-
         document.querySelectorAll('.founder__photo[role="button"], .member__photo[role="button"]').forEach((photo) => {
             const group = photo.closest('.founder, .member');
             const toggle = () => {
@@ -314,16 +308,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const show = (i) => {
                     const li = parts[i];
-                    const link = li.querySelector('a');
-                    const label = link.textContent.trim();
+                    const link = li.querySelector('a');   // a page of a live site has one; a private product has none
+                    const label = li.querySelector('h4').textContent.trim();
 
-                    const shot = document.createElement('a');
+                    const shot = document.createElement(link ? 'a' : 'div');
                     shot.className = 'case__shot';
-                    shot.href = link.href;
-                    shot.target = '_blank';
-                    shot.rel = 'noopener noreferrer';
-                    shot.tabIndex = -1;
-                    shot.setAttribute('aria-hidden', 'true');
+                    if (link) {
+                        shot.href = link.href;
+                        shot.target = '_blank';
+                        shot.rel = 'noopener noreferrer';
+                        shot.tabIndex = -1;
+                        shot.setAttribute('aria-hidden', 'true');
+                    }
                     const img = document.createElement('img');
                     img.src = li.dataset.image;
                     img.alt = '';
@@ -335,13 +331,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const title = document.createElement('h4');
                     title.textContent = label;
+                    panel.replaceChildren(shot, title);
+                    if (!link) return;
+
                     const open = document.createElement('a');
                     open.className = 'case__open mono';
                     open.href = link.href;
                     open.target = '_blank';
                     open.rel = 'noopener noreferrer';
                     open.textContent = `${t('Open the live page')} →`;
-                    panel.replaceChildren(shot, title, open);
+                    panel.append(open);
                 };
                 show(0);
                 c.classList.add('is-enhanced');
@@ -349,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const w = window.innerWidth;
                 const width = Math.round(Math.min(340, Math.max(220, w * 0.62)));
                 return window.AKAIFolder.mount(host, {
-                    items: parts.map((li, i) => ({ label: li.querySelector('a').textContent.trim(), value: i, image: li.dataset.thumb })),
+                    items: parts.map((li, i) => ({ label: li.querySelector('h4').textContent.trim(), value: i, image: li.dataset.thumb })),
                     label: host.dataset.label,
                     sublabel: `${t('Case')} ${String(host.dataset.case).padStart(2, '0')}`,
                     width,
