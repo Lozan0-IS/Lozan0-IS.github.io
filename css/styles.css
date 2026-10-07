@@ -1453,6 +1453,42 @@ html:not(.js) .scribble path {
   }
 }
 
+.founder__photo[role="button"] {
+  cursor: pointer;
+}
+
+.founder__photo:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 6px;
+}
+
+.founder__photo.is-revealed .scribble {
+  opacity: 0;
+}
+
+/* Only touch screens need telling: a mouse finds the hover on its own */
+.founder__hint {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: 0.9rem;
+  transform: translateX(-50%);
+  padding: 0.4rem 0.8rem;
+  background: #000;
+  color: #fff;
+  white-space: nowrap;
+}
+
+@media (hover: none) {
+  .founder__hint {
+    display: block;
+  }
+
+  .founder__photo.is-revealed .founder__hint {
+    opacity: 0;
+  }
+}
+
 .founder__credits {
   display: grid;
   grid-template-columns: 1fr 1fr;

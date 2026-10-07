@@ -116,6 +116,8 @@ window.AKAI_ES = {
     'Portrait of Alan I. Lozano, with a hand-drawn scribble over the eyes': 'Retrato de Alan I. Lozano, con un garabato dibujado a mano sobre los ojos',
     'Founder & Creative Director': 'Fundador y director creativo',
     'A studio by': 'Un estudio de',
+    'Show the portrait without the scribble': 'Ver el retrato sin el garabato',
+    'Tap the portrait': 'Toca el retrato',
 
     // 404
     'Page not found': 'Página no encontrada',

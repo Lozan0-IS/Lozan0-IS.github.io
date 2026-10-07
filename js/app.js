@@ -272,6 +272,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- 15. Founder portrait: tap, click or Enter/Space lifts the scribble (hover does it too, in CSS) ---
+    const initFounder = () => {
+        const photo = document.querySelector('.founder__photo[role="button"]');
+        if (!photo) return;
+
+        const toggle = () => {
+            const revealed = photo.classList.toggle('is-revealed');
+            photo.setAttribute('aria-pressed', String(revealed));
+        };
+
+        photo.addEventListener('click', toggle);
+        photo.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+            }
+        });
+    };
+
     // --- 16. Hero: the name is drawn first, then "We build ___" draws each word as a type specimen ---
     // The guides are the real vertical metrics of each typeface (measured here), and the number under the word is
     // the width it takes on screen. Each lap starts with the name.
@@ -428,6 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     initLanguage();
     initHero();
+    initFounder();
     initActiveSection();
     initLocalTime();
     initSmoothScroll();
