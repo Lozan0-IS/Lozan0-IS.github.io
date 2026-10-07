@@ -111,6 +111,20 @@ window.AKAI_ES = {
     'Santiago, Dominican Republic': 'Santiago, República Dominicana',
     'No cookie banner here, because there is nothing to consent to: no cookies, no analytics, no third-party requests.': 'Aquí no hay banner de cookies porque no hay nada que consentir: sin cookies, sin analítica y sin peticiones a terceros.',
 
+    // Work
+    'WORK': 'TRABAJO',
+    'Case': 'Caso',
+    'The client': 'El cliente',
+    'What we built': 'Lo que construimos',
+    'Digital experience for a Can-Am / UTV company:': 'Experiencia digital para una empresa Can-Am / UTV:',
+    'showcase, booking and administration.': 'vitrina, reservas y administración.',
+    'Jalip Motorsport is a Can-Am / UTV customization and motorsport company.': 'Jalip Motorsport es una empresa de personalización de Can-Am / UTV y de motorsport.',
+    'A digital platform with an interactive product showcase, service booking and an administration system.': 'Una plataforma digital con una vitrina interactiva de productos, reserva de servicios y un sistema de administración.',
+    'Brand and digital experience for a production company:': 'Marca y experiencia digital para una productora:',
+    'portfolio, video, artists and booking.': 'portafolio, video, artistas y reservas.',
+    'La Fama Films is a creative production company.': 'La Fama Films es una productora creativa.',
+    'A brand identity and a digital platform with a portfolio showcase, a video experience, artist profiles and integrated booking.': 'Una identidad de marca y una plataforma digital con vitrina de portafolio, experiencia de video, perfiles de artistas y reservas integradas.',
+
     // Founder
     'The person behind AKAI': 'La persona detrás de AKAI',
     'Portrait of lozan0.is, with a hand-drawn scribble over the eyes': 'Retrato de lozan0.is, con un garabato dibujado a mano sobre los ojos',

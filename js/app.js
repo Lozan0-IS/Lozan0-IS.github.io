@@ -293,6 +293,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- 15b. Work cases: each case's notes become a folder whose pills float out; picking one fills the card ---
+    const initCases = () => {
+        const cases = [...document.querySelectorAll('.case')];
+        if (!cases.length || !window.AKAIFolder) return;
+
+        let mounted = [];
+        const build = () => {
+            mounted.forEach((m) => m.destroy());
+            mounted = cases.map((c) => {
+                const host = c.querySelector('[data-folder]');
+                const panel = c.querySelector('.case__panel');
+                const parts = [...c.querySelectorAll('.case__parts > li')];
+                if (!host || !panel || !parts.length) return { destroy() {} };
+
+                const show = (i) => {
+                    panel.replaceChildren(parts[i].querySelector('h4').cloneNode(true), parts[i].querySelector('p').cloneNode(true));
+                };
+                show(0);
+                c.classList.add('is-enhanced');
+
+                const w = window.innerWidth;
+                const width = Math.round(Math.min(340, Math.max(220, w * 0.62)));
+                return window.AKAIFolder.mount(host, {
+                    items: parts.map((li, i) => ({ label: li.querySelector('h4').textContent.trim(), value: i })),
+                    label: host.dataset.label,
+                    sublabel: `${t('Case')} ${String(host.dataset.case).padStart(2, '0')}`,
+                    width,
+                    height: Math.round(width * 0.74),
+                    spread: Math.max(120, Math.min(260, (w - 56) / 2)),
+                    onSelect: (i) => show(i)
+                });
+            });
+        };
+        build();
+
+        // Rebuild when the width changes (not on the height-only resizes of a phone's address bar) or the language does
+        let lastWidth = window.innerWidth, timer;
+        window.addEventListener('resize', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; build(); }
+            }, 250);
+        });
+        document.addEventListener('akai:lang', build);
+    };
+
     // --- 16. Hero: the name is drawn first, then "We build ___" draws each word as a type specimen ---
     // The guides are the real vertical metrics of each typeface (measured here), and the number under the word is
     // the width it takes on screen. Each lap starts with the name.
@@ -450,6 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initHero();
     initFounder();
+    initCases();
     initActiveSection();
     initLocalTime();
     initSmoothScroll();
