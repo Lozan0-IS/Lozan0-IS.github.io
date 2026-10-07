@@ -889,141 +889,218 @@ body::before {
   color: var(--ink);
 }
 
-/* Guided brief */
+/* Guided brief — numbered rows. The questions with fixed answers are a dotted track you pick a stop on; the rest are plain rows. */
 .brief {
-  max-width: 44rem;
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 2.75rem;
+  gap: 0.75rem;
 }
 
 .brief__step {
+  position: relative;
   border: 0;
   margin: 0;
-  padding: 0;
   min-width: 0;
+  padding: 1.1rem 1.25rem 1.25rem 6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .brief__legend {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+  float: left;
   width: 100%;
   padding: 0;
-  margin-bottom: 1rem;
-  font-size: var(--text-body);
+  margin: 0 0 1.5rem;
+  font-size: var(--text-title);
   font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   color: var(--ink);
 }
 
-.brief__num,
+.brief__num {
+  position: absolute;
+  left: 1.25rem;
+  top: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  font-weight: 400;
+  color: var(--ink);
+}
+
 .brief__optional {
+  margin-left: 0.5rem;
   font-family: var(--font-mono);
   font-size: var(--text-meta);
   font-weight: 400;
   color: var(--ink-secondary);
 }
 
-.brief__optional {
-  margin-left: auto;
+/* The track: one dot per answer on a dotted line */
+.brief__options {
+  clear: both;
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1.25rem;
 }
 
-.brief__options {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--border);
+.brief__options::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 5px;
+  border-top: 2px dotted rgba(255, 255, 255, 0.28);
 }
 
 .brief__option {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  min-height: 48px;
-  border-bottom: 1px solid var(--border);
-  font-size: var(--text-body);
-  color: var(--ink);
+  position: relative;
+  display: block;
+  padding-top: 1.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
   cursor: pointer;
+  transition: color 150ms ease;
 }
 
 .brief__option input {
   appearance: none;
-  flex-shrink: 0;
-  display: grid;
-  place-content: center;
-  width: 16px;
-  height: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
   margin: 0;
-  border: 1.5px solid var(--border-strong);
+  border: 1px solid var(--ink-secondary);
   border-radius: 50%;
-  transition: border-color 150ms ease;
+  background: #000;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms var(--ease-out);
 }
 
-.brief__option input::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  transform: scale(0);
-  transition: transform 150ms var(--ease-out);
-}
+.brief__option:has(input:checked) { color: var(--ink); }
 
 .brief__option input:checked {
-  border-color: var(--accent);
-}
-
-.brief__option input:checked::before {
-  transform: scale(1);
-}
-
-.brief__option:has(input:checked) {
-  font-weight: 600;
+  background: #fff;
+  border-color: #fff;
+  transform: scale(1.25);
 }
 
 .brief__option input:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #fff;
   outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .brief__option:hover input:not(:checked) {
-    border-color: var(--ink);
-  }
+  .brief__option:hover { color: var(--ink); }
+  .brief__option:hover input:not(:checked) { border-color: var(--ink); }
+}
+
+@media (max-width: 760px) {
+  .brief__step { padding: 3rem 1rem 1.25rem; }
+  .brief__num { top: 1rem; left: 1rem; }
+  .brief__options { grid-auto-flow: row; gap: 0; }
+  .brief__options::before { top: 8px; bottom: 8px; left: 5px; right: auto; border-top: 0; border-left: 2px dotted rgba(255, 255, 255, 0.28); }
+  .brief__option { padding: 0.55rem 0 0.55rem 2rem; min-height: 44px; }
+  .brief__option input { top: 0.95rem; }
+}
+
+/* Single-line rows: number, label, then the field itself */
+.brief__step:not(fieldset) {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(7rem, 14rem) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.5rem 1.25rem 0.5rem 1.25rem;
+  min-height: 3.25rem;
+}
+
+.brief__step:not(fieldset) .brief__legend {
+  display: contents;
+}
+
+.brief__step:not(fieldset) .brief__num {
+  position: static;
+}
+
+.brief__label {
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.brief__step:not(fieldset):has(textarea) { align-items: start; padding-top: 0.9rem; padding-bottom: 0.9rem; }
+
+@media (max-width: 760px) {
+  .brief__step:not(fieldset) { grid-template-columns: 2.5rem minmax(0, 1fr); row-gap: 0.25rem; padding: 0.9rem 1rem; }
+  .brief__step:not(fieldset) .brief__input { grid-column: 1 / -1; }
 }
 
 .brief__input {
   width: 100%;
-  padding: 0.75rem 0;
+  padding: 0.6rem 0;
   font: inherit;
   font-size: max(1rem, var(--text-body)); /* 16px floor stops iOS zooming into the field */
   color: var(--ink);
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--border-strong);
   border-radius: 0;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
+
+.brief__input::placeholder { color: var(--ink-secondary); opacity: 1; }
 
 .brief__input:focus {
   outline: none;
-  border-bottom-color: var(--ink);
   box-shadow: 0 1px 0 var(--ink);
 }
 
 .brief__input--area {
-  min-height: 6rem;
+  min-height: 5rem;
   resize: vertical;
   line-height: 1.6;
 }
 
 .brief__error {
-  margin-top: 0.75rem;
+  clear: both;
+  margin-top: 1rem;
   font-size: 0.875rem;
   color: var(--error);
 }
 
+/* Submit is a white pill */
 .brief .contact__link {
+  align-self: flex-start;
+  margin-top: 1rem;
+  padding: 0.85rem 1.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fff;
+  color: #000;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.brief .contact__link::after { display: none; }
+
+.brief__status {
+  min-height: 1.6em;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+.brief__status:empty {
+  display: none;
+}
+
+.contact__link {
   align-self: flex-start;
   padding: 0;
   font-family: inherit;
@@ -1092,6 +1169,9 @@ body::before {
     text-decoration-color: var(--accent);
   }
 }
+
+.brief .contact__link:hover,
+.brief .contact__link:active { color: #000; }
 
 .contact__link:active {
   color: var(--accent);
@@ -1551,6 +1631,8 @@ html:has(.talk[open]) { overflow: hidden; }
 
 /* The brief reuses the old contact-section styles, minus the page-level padding */
 .talk .contact { padding: 0; }
+.talk .contact__body { grid-template-columns: 1fr; gap: 1.25rem; }
+.talk .contact__intro { max-width: 40rem; font-size: 1.125rem; color: var(--ink-secondary); font-weight: 400; }
 
 .talk__brief { margin-top: 1.5rem; }
 

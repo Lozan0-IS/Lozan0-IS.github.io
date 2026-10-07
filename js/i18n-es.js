@@ -140,6 +140,7 @@ window.AKAI_ES = {
     'ANYTHING ELSE': 'ALGO MÁS',
     'Just saying hi.': 'Solo vengo a saludar.',
     'Close': 'Cerrar',
+    'Type here': 'Escribe aquí',
     'Back': 'Volver',
     'Start a project: go to the brief': 'Empezar un proyecto: ir al brief',
 
