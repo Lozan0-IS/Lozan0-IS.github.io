@@ -1537,10 +1537,30 @@ html:has(.talk[open]) { overflow: hidden; }
   transition: background 180ms ease;
 }
 
-.talk__view[hidden] { display: none; }
+.talk__intro,
+.talk__brief { flex: 1; }
 
-/* The brief view reuses the old contact-section styles, minus the page-level padding */
+.talk__intro { display: flex; flex-direction: column; }
+.talk__intro[hidden],
+.talk__brief[hidden] { display: none; }
+
+/* After the arrow, Collaboration is the only card and holds the whole brief */
+.talk__cards[data-open] { grid-template-columns: 1fr; }
+.talk__cards[data-open] .talk__card:not(.talk__card--collab) { display: none; }
+.talk__cards[data-open] .talk__card--collab { min-height: 0; padding: clamp(1.5rem, 4vw, 3rem); }
+
+/* The brief reuses the old contact-section styles, minus the page-level padding */
 .talk .contact { padding: 0; }
+
+.talk__brief { margin-top: 1.5rem; }
+
+/* Once the brief is open its own headline leads, so the welcome lines step aside */
+.talk__inner:has(.talk__cards[data-open]) { padding-top: clamp(5rem, 10vh, 7rem); }
+.talk__inner:has(.talk__cards[data-open]) .talk__eyebrow,
+.talk__inner:has(.talk__cards[data-open]) .talk__title { display: none; }
+.talk__cards[data-open] { margin-top: 0; }
+.talk .contact__top { flex-wrap: wrap; align-items: flex-end; }
+.talk .contact__headline { font-size: clamp(2.25rem, 6vw, 6rem); }
 
 .talk__back {
   display: inline-flex;

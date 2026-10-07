@@ -278,25 +278,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const trigger = document.querySelector('.connect');
         if (!dialog || !trigger || typeof dialog.showModal !== 'function') return;
 
-        const views = [...dialog.querySelectorAll('[data-view]')];
-        const show = (name) => {
-            views.forEach((v) => { v.hidden = v.dataset.view !== name; });
+        const cards = dialog.querySelector('.talk__cards');
+        const intro = dialog.querySelector('.talk__intro');
+        const brief = dialog.querySelector('.talk__brief');
+        const open = (on) => {
+            cards.toggleAttribute('data-open', on);
+            intro.hidden = on;
+            brief.hidden = !on;
             dialog.scrollTo(0, 0);
         };
 
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            show('start');
+            open(false);
             dialog.showModal();
         });
         dialog.querySelector('.talk__close').addEventListener('click', () => dialog.close());
         dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
         dialog.querySelector('.talk__go').addEventListener('click', () => {
-            show('brief');
+            open(true);
             dialog.querySelector('.talk__back').focus();
         });
         dialog.querySelector('.talk__back').addEventListener('click', () => {
-            show('start');
+            open(false);
             dialog.querySelector('.talk__go').focus();
         });
         dialog.querySelector('.talk__chip').addEventListener('click', () => dialog.close());
