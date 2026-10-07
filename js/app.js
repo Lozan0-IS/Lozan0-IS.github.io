@@ -272,89 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 15. Peel-off sticker (drag inside the hero, glide on release, lean while moving) ---
-    // The peel itself is CSS (:hover / :active / .touch-active); this adds the drag and the cursor-following light.
-    const initSticker = () => {
-        const sticker = document.getElementById('sticker');
-        const bounds = sticker && sticker.parentElement;
-        const container = sticker && sticker.querySelector('.sticker__container');
-        if (!sticker || !bounds || !container) return;
-
-        const light = document.getElementById('sticker-light-src');
-        const lightFlipped = document.getElementById('sticker-light-flipped-src');
-        let x = 0, y = 0, moved = false, glide = 0;
-
-        const limits = () => ({
-            maxX: Math.max(0, bounds.clientWidth - sticker.offsetWidth),
-            maxY: Math.max(0, bounds.clientHeight - sticker.offsetHeight)
-        });
-        const place = (nx, ny) => {
-            const { maxX, maxY } = limits();
-            x = Math.min(Math.max(0, nx), maxX);
-            y = Math.min(Math.max(0, ny), maxY);
-            sticker.style.translate = `${x}px ${y}px`;
-        };
-        // Resting spot: top-right, below the menu
-        const home = () => place(
-            bounds.clientWidth - sticker.offsetWidth - bounds.clientWidth * 0.04,
-            parseFloat(getComputedStyle(document.documentElement).fontSize) * 9
-        );
-
-        home();
-        window.addEventListener('resize', () => (moved ? place(x, y) : home()));
-
-        let lastX = 0, lastY = 0, vx = 0, vy = 0, lastT = 0;
-
-        sticker.addEventListener('pointerdown', (e) => {
-            cancelAnimationFrame(glide);
-            sticker.setPointerCapture(e.pointerId);
-            sticker.classList.add('is-dragging');
-            if (e.pointerType !== 'mouse') container.classList.add('touch-active');
-            lastX = e.clientX; lastY = e.clientY; lastT = e.timeStamp; vx = vy = 0;
-        });
-
-        sticker.addEventListener('pointermove', (e) => {
-            if (!sticker.hasPointerCapture(e.pointerId)) return;
-            const dx = e.clientX - lastX, dy = e.clientY - lastY;
-            const dt = Math.max(1, e.timeStamp - lastT);
-            vx = dx / dt * 16; vy = dy / dt * 16;
-            lastX = e.clientX; lastY = e.clientY; lastT = e.timeStamp;
-            moved = true;
-            place(x + dx, y + dy);
-            if (!prefersReducedMotion) sticker.style.rotate = `${Math.max(-24, Math.min(24, dx * 0.4))}deg`;
-        });
-
-        const release = (e) => {
-            if (!sticker.hasPointerCapture(e.pointerId)) return;
-            sticker.releasePointerCapture(e.pointerId);
-            sticker.classList.remove('is-dragging');
-            container.classList.remove('touch-active');
-            sticker.style.rotate = '0deg';
-            if (prefersReducedMotion) return;
-            const step = () => {
-                vx *= 0.94; vy *= 0.94;
-                if (Math.abs(vx) < 0.1 && Math.abs(vy) < 0.1) return;
-                place(x + vx, y + vy);
-                glide = requestAnimationFrame(step);
-            };
-            glide = requestAnimationFrame(step);
-        };
-        sticker.addEventListener('pointerup', release);
-        sticker.addEventListener('pointercancel', release);
-
-        // A mouse gets a specular highlight that follows it, and the flipped back lights from the opposite side
-        if (light && lightFlipped && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                const px = e.clientX - rect.left, py = e.clientY - rect.top;
-                light.setAttribute('x', px);
-                light.setAttribute('y', py);
-                lightFlipped.setAttribute('x', px);
-                lightFlipped.setAttribute('y', rect.height - py);
-            });
-        }
-    };
-
     // --- 16. Hero: the name is drawn first, then "We build ___" draws each word as a type specimen ---
     // The guides are the real vertical metrics of each typeface (measured here), and the number under the word is
     // the width it takes on screen. Each lap starts with the name.
@@ -511,7 +428,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     initLanguage();
     initHero();
-    initSticker();
     initActiveSection();
     initLocalTime();
     initSmoothScroll();
