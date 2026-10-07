@@ -109,7 +109,6 @@ window.AKAI_ES = {
 
     // Footer
     'Santiago, Dominican Republic': 'Santiago, República Dominicana',
-    'Email': 'Correo',
     'No cookie banner here, because there is nothing to consent to: no cookies, no analytics, no third-party requests.': 'Aquí no hay banner de cookies porque no hay nada que consentir: sin cookies, sin analítica y sin peticiones a terceros.',
 
     // 404

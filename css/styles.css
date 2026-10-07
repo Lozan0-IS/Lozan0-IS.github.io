@@ -32,7 +32,7 @@
   --text-headline: clamp(2.5rem, 6vw, 5rem);
   --text-title: clamp(1.5rem, 3vw, 2.5rem);
   --text-body: clamp(1rem, 1.2vw, 1.125rem);
-  --text-meta: 0.8125rem;
+  --text-meta: 0.875rem;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -170,6 +170,19 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   mix-blend-mode: difference;
   color: #fff;
+}
+
+/* Content fades out under the fixed menu instead of colliding with it */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(5.5rem, 8vw, 7.5rem);
+  background: linear-gradient(#000 80%, rgba(0, 0, 0, 0));
+  z-index: 90;
+  pointer-events: none;
 }
 
 .nav > * {
