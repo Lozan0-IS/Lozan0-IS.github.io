@@ -35,8 +35,9 @@
         return matterPromise;
     };
 
-    // Pack the pills into centred rows above the folder
+    // Pack the pills (or page cards) into centred rows above the folder
     const layout = (labels, spread, lift, tilt, sizes) => {
+        const rowH = Math.max(ROW, ...sizes.map((s) => (s ? s.h + 18 : 0)));
         const rows = [];
         let row = [], width = 0;
         labels.forEach((text, i) => {
@@ -57,7 +58,8 @@
             const shift = (ri % 2 ? 1 : -1) * Math.min(16, spread * 0.1);
             r.items.forEach(({ i, pw }) => {
                 const j = jitter(i);
-                pos[i] = { x: x + pw / 2 + shift + (j - 0.5) * 6, y: -lift - ri * ROW - j * 6, r: tilt * (j * 2 - 1) };
+                const extra = sizes[i] ? Math.max(0, sizes[i].h - 34) : 0;   // a tall card keeps its bottom edge where a pill's would be
+                pos[i] = { x: x + pw / 2 + shift + (j - 0.5) * 6, y: -lift - extra - ri * rowH - j * 6, r: tilt * (j * 2 - 1) };
                 x += pw + GAP;
             });
         });
@@ -97,7 +99,22 @@
             b.setAttribute('aria-hidden', 'true');
             b.style.setProperty('--i', i);
             const span = make('span', 'folder-float__drift');
-            span.textContent = item.label;
+            if (item.image) {
+                // A page card: the picture is only fetched the first time the folder opens
+                b.classList.add('folder-float__item--card');
+                b.setAttribute('aria-label', item.label);
+                const img = make('img');
+                img.alt = '';
+                img.width = 400;
+                img.height = 250;
+                img.decoding = 'async';
+                img.dataset.src = item.image;
+                const cap = make('span', 'folder-float__cap');
+                cap.textContent = item.label;
+                span.append(img, cap);
+            } else {
+                span.textContent = item.label;
+            }
             b.append(span);
             itemsBox.append(b);
             return b;
@@ -224,6 +241,7 @@
         const set = (next) => {
             if (next === open) return;
             open = next;
+            if (open) pills.forEach((b) => { const im = b.querySelector('img[data-src]'); if (im && !im.src) im.src = im.dataset.src; });
             root.toggleAttribute('data-open', open);
             trigger.setAttribute('aria-expanded', String(open));
             pills.forEach((b) => {

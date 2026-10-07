@@ -308,7 +308,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!host || !panel || !parts.length) return { destroy() {} };
 
                 const show = (i) => {
-                    panel.replaceChildren(parts[i].querySelector('h4').cloneNode(true), parts[i].querySelector('p').cloneNode(true));
+                    const li = parts[i];
+                    const link = li.querySelector('a');
+                    const label = link.textContent.trim();
+
+                    const shot = document.createElement('a');
+                    shot.className = 'case__shot';
+                    shot.href = link.href;
+                    shot.target = '_blank';
+                    shot.rel = 'noopener noreferrer';
+                    shot.tabIndex = -1;
+                    shot.setAttribute('aria-hidden', 'true');
+                    const img = document.createElement('img');
+                    img.src = li.dataset.image;
+                    img.alt = '';
+                    img.width = 1200;
+                    img.height = 750;
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                    shot.append(img);
+
+                    const title = document.createElement('h4');
+                    title.textContent = label;
+                    const open = document.createElement('a');
+                    open.className = 'case__open mono';
+                    open.href = link.href;
+                    open.target = '_blank';
+                    open.rel = 'noopener noreferrer';
+                    open.textContent = `${t('Open the live page')} →`;
+                    panel.replaceChildren(shot, title, open);
                 };
                 show(0);
                 c.classList.add('is-enhanced');
@@ -316,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const w = window.innerWidth;
                 const width = Math.round(Math.min(340, Math.max(220, w * 0.62)));
                 return window.AKAIFolder.mount(host, {
-                    items: parts.map((li, i) => ({ label: li.querySelector('h4').textContent.trim(), value: i })),
+                    items: parts.map((li, i) => ({ label: li.querySelector('a').textContent.trim(), value: i, image: li.dataset.thumb })),
                     label: host.dataset.label,
                     sublabel: `${t('Case')} ${String(host.dataset.case).padStart(2, '0')}`,
                     width,

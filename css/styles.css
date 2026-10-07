@@ -1653,26 +1653,54 @@ html:not(.js) .scribble path {
 .case__panel {
   grid-column: 3;
   justify-self: start;
-  width: min(100%, 20rem);
-  padding: 1.25rem 1.5rem 1.5rem;
+  width: min(100%, 26rem);
+  padding: 0.75rem 0.75rem 1.25rem;
   border-radius: 18px;
   background: #ececec;
   color: #0a0a09;
 }
 
+.case__shot {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #cfcfcf;
+}
+
+.case__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
 .case__panel h4 {
+  margin: 0.9rem 0.75rem 0.25rem;
   font-size: 1.0625rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
 }
 
-.case__panel p {
-  font-size: var(--text-body);
-  line-height: 1.45;
-  color: #2a2a2a;
+.case__open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0 0.75rem;
+  color: #0a0a09;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(0, 0, 0, 0.35);
+  transition: text-decoration-color 150ms ease;
+}
+
+.case__open:focus-visible {
+  outline: 2px solid #0a0a09;
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case__open:hover { text-decoration-color: var(--accent); }
 }
 
 .case__parts {
@@ -1682,14 +1710,12 @@ html:not(.js) .scribble path {
 }
 
 .case__parts h4 {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   font-size: 1.0625rem;
 }
 
-.case__parts p {
-  margin-top: 0.25rem;
-  color: var(--ink-secondary);
-  line-height: 1.5;
+.case__parts a {
+  color: var(--ink);
 }
 
 /* Without JS the folder and card are not built, so the notes are shown as a plain list */
@@ -1832,6 +1858,53 @@ html:not(.js) .scribble path {
 .folder-float__item:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 4px;
+}
+
+/* A pill that carries a picture: a small card showing one finished page of the client's site */
+.folder-float__item.folder-float__item--card {
+  --card-w: 168px;
+  --card-h: 105px;
+  width: var(--card-w);
+  height: var(--card-h);
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--ff-item);
+}
+
+.folder-float__item.folder-float__item--card .folder-float__drift {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.folder-float__item.folder-float__item--card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.folder-float__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.3rem 0.5rem;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .folder-float__item.folder-float__item--card {
+    --card-w: 128px;
+    --card-h: 80px;
+  }
 }
 
 .folder-float[data-open] .folder-float__front {
