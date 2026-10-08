@@ -304,6 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
             dialog.querySelector('.talk__go').focus();
         });
         dialog.querySelector('.talk__chip').addEventListener('click', () => dialog.close());
+
+        // Other pages send visitors here as /#talk
+        if (location.hash === '#talk') {
+            history.replaceState(null, '', location.pathname + location.search);
+            dialog.showModal();
+        }
     };
 
     // --- 14b. Credo headline: letters you can cut by dragging across them. A cut letter falls, turns to dust on the floor and pours back in ---

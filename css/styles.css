@@ -1268,6 +1268,119 @@ body::before {
   margin-top: 1.4em;
 }
 
+/* Case pages — facts, what was built, screens, next case */
+.casepage > :not(.case__cta) {
+  padding-left: clamp(1.5rem, 4vw, 4rem);
+  padding-right: clamp(1.5rem, 4vw, 4rem);
+}
+
+.casepage .note__header { padding-left: 0; padding-right: 0; border-bottom: 0; }
+.casepage > .note__header { margin: 0 clamp(1.5rem, 4vw, 4rem); }
+
+.casefacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.5rem 2rem;
+  margin: 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
+}
+
+.casefacts dt { margin-bottom: 0.4rem; }
+.casefacts dd { margin: 0; font-size: var(--text-body); line-height: 1.4; }
+
+.casebuilt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1rem 2rem;
+  padding-top: clamp(2.5rem, 6vh, 4rem);
+  padding-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+.casebuilt__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.casebuilt__list li { padding: 0.9rem 0; border-bottom: 1px solid var(--border); font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); line-height: 1.45; }
+
+@media (max-width: 760px) {
+  .casebuilt { grid-template-columns: 1fr; }
+}
+
+.caseshots__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (max-width: 760px) {
+  .caseshots__list { grid-template-columns: 1fr; }
+}
+
+.caseshots figure { margin: 0; }
+.caseshots figcaption { margin-top: 0.6rem; }
+
+.caseshots img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: #1a1b1d;
+}
+
+.caseshots a { display: block; }
+.caseshots a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+.caseshots__note { margin: 1rem 0 0; color: var(--ink-secondary); }
+
+.casenext { padding-top: clamp(3rem, 8vh, 5rem); }
+
+.casenext__link {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 200ms ease;
+}
+
+.casenext__name {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.casenext__link:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .casenext__link:hover { color: var(--accent); }
+}
+
+/* Home: link from a case to its own page */
+.case__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 1.5rem;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--border-strong);
+  transition: text-decoration-color 200ms ease;
+}
+
+.case__more:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .case__more:hover { text-decoration-color: var(--accent); }
+}
+
 /* Page-to-page continuity: the project name travels from the list into the case title.
    Browsers without cross-document view transitions simply navigate. */
 @view-transition {
