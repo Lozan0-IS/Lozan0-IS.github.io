@@ -477,6 +477,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // --- 15a. WORK is a single entry: pressing it unfolds the cases (and /#work arrives already unfolded) ---
+    const initWork = () => {
+        const toggle = document.querySelector('.work__toggle');
+        const cases = document.getElementById('work-cases');
+        if (!toggle || !cases) return;
+
+        const set = (open) => {
+            toggle.setAttribute('aria-expanded', String(open));
+            cases.toggleAttribute('data-folded', !open);
+            cases.toggleAttribute('inert', !open);
+        };
+        set(false);
+
+        toggle.addEventListener('click', () => {
+            const open = toggle.getAttribute('aria-expanded') !== 'true';
+            set(open);
+        });
+
+        const fromHash = () => {
+            if (location.hash !== '#work') return;
+            set(true);
+            document.getElementById('work').scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+        };
+        fromHash();
+        window.addEventListener('hashchange', fromHash);
+    };
+
     // --- 15b. Work cases: each case's notes become a folder whose pills float out; picking one fills the card ---
     const initCases = () => {
         const cases = [...document.querySelectorAll('.case')];
@@ -715,6 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTalk();
     initSand();
     initFounder();
+    initWork();
     initCases();
     initActiveSection();
     initLocalTime();

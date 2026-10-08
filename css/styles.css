@@ -2178,6 +2178,78 @@ html:not(.js) .scribble path {
   padding: var(--space-section) 0;
 }
 
+/* WORK is one entry that unfolds into the cases. Only folded once JS runs, so without it every case simply shows. */
+.work__toggle {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+html:not(.js) .work__toggle { cursor: default; }
+
+.work__toggle:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+
+.work__word { flex: 0 1 auto; }
+
+.work__meta {
+  margin-left: auto;
+  font-size: var(--text-meta);
+  letter-spacing: 0.1em;
+  color: var(--ink-secondary);
+}
+
+.work__plus {
+  position: relative;
+  flex-shrink: 0;
+  align-self: center;
+  width: clamp(2.5rem, 5vw, 4rem);
+  height: clamp(2.5rem, 5vw, 4rem);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  transition: background 200ms ease, transform 300ms var(--ease-out);
+}
+
+.work__plus::before,
+.work__plus::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  height: 1.5px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  transition: transform 300ms var(--ease-out), background 200ms ease;
+}
+
+.work__plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+
+.work__toggle[aria-expanded="true"] .work__plus::after { transform: translate(-50%, -50%) rotate(0deg); }
+
+@media (hover: hover) and (pointer: fine) {
+  .work__toggle:hover .work__plus { background: #fff; }
+  .work__toggle:hover .work__plus::before,
+  .work__toggle:hover .work__plus::after { background: #000; }
+}
+
+.work__cases { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 500ms var(--ease-out), visibility 0s; }
+.work__cases-inner { min-height: 0; overflow: hidden; }
+html.js .work__cases[data-folded] { grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 500ms var(--ease-out), visibility 0s 500ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .work__cases,
+  html.js .work__cases[data-folded] { transition: none; }
+}
+
 .case {
   overflow-x: clip;
   display: grid;

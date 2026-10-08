@@ -114,6 +114,7 @@ window.AKAI_ES = {
     // Work
     'WORK': 'TRABAJO',
     'Case': 'Caso',
+    '3 projects': '3 proyectos',
     'Home': 'Inicio',
     'Services': 'Servicios',
     'Portfolio': 'Portafolio',

@@ -188,52 +188,62 @@
         <!-- 5b. WORK — each case is a folder that opens and lets its parts float out. The "result" is the finished pages: each card is a real screenshot of a live page of the client site (only views that are finished, none with placeholder text) -->
         <section class="work" id="work" aria-labelledby="work-title">
             <div class="section-head">
-                <h2 class="section-title" id="work-title">WORK</h2>
-                <span class="section-index" aria-hidden="true">/03</span>
+                <h2 class="section-title" id="work-title">
+                    <button type="button" class="work__toggle" aria-expanded="false" aria-controls="work-cases">
+                        <span class="work__word">WORK</span>
+                        <span class="work__meta mono">3 projects</span>
+                        <span class="work__plus" aria-hidden="true"></span>
+                    </button>
+                </h2>
             </div>
-            <article class="case reveal">
-                <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">JALIP</span></h3>
-                <div class="case__stage">
-                    <p class="case__lead"><span>Digital experience for a Can-Am / UTV company: </span><strong>showcase, booking and administration.</strong></p>
-                    <div class="case__folder" data-folder data-label="Jalip Motorsport" data-case="1"></div>
-                    <div class="case__panel" aria-live="polite"></div>
+            <!-- Folded by default. Without JS the toggle does nothing, so the folded part is only hidden once app.js has run -->
+            <div class="work__cases" id="work-cases">
+                <div class="work__cases-inner">
+                    <article class="case reveal">
+                        <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">JALIP</span></h3>
+                        <div class="case__stage">
+                            <p class="case__lead"><span>Digital experience for a Can-Am / UTV company: </span><strong>showcase, booking and administration.</strong></p>
+                            <div class="case__folder" data-folder data-label="Jalip Motorsport" data-case="1"></div>
+                            <div class="case__panel" aria-live="polite"></div>
+                        </div>
+                        <ul class="case__parts">
+                            <li data-image="/assets/work/jalip-home.webp" data-thumb="/assets/work/jalip-home-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html" target="_blank" rel="noopener noreferrer">Home</a></h4></li>
+                            <li data-image="/assets/work/jalip-services.webp" data-thumb="/assets/work/jalip-services-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#servicios" target="_blank" rel="noopener noreferrer">Services</a></h4></li>
+                            <li data-image="/assets/work/jalip-portfolio.webp" data-thumb="/assets/work/jalip-portfolio-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#modificaciones" target="_blank" rel="noopener noreferrer">Portfolio</a></h4></li>
+                            <li data-image="/assets/work/jalip-booking.webp" data-thumb="/assets/work/jalip-booking-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#mantenimiento" target="_blank" rel="noopener noreferrer">Book maintenance</a></h4></li>
+                        </ul>
+                        <a class="case__more mono" href="/work/jalip-motorsport/">View the case →</a>
+                    </article>
+                    <article class="case reveal">
+                        <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">LA FAMA</span></h3>
+                        <div class="case__stage">
+                            <p class="case__lead"><span>Brand and digital experience for a production company: </span><strong>portfolio, video, artists and booking.</strong></p>
+                            <div class="case__folder" data-folder data-label="La Fama Films" data-case="2"></div>
+                            <div class="case__panel" aria-live="polite"></div>
+                        </div>
+                        <ul class="case__parts">
+                            <li data-image="/assets/work/fama-home.webp" data-thumb="/assets/work/fama-home-t.webp"><h4><a href="https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html" target="_blank" rel="noopener noreferrer">Home</a></h4></li>
+                            <li data-image="/assets/work/fama-booking.webp" data-thumb="/assets/work/fama-booking-t.webp"><h4><a href="https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html#booking" target="_blank" rel="noopener noreferrer">Book a project</a></h4></li>
+                        </ul>
+                        <a class="case__more mono" href="/work/la-fama-films/">View the case →</a>
+                    </article>
+                    <article class="case reveal">
+                        <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">HARDWARE</span></h3>
+                        <div class="case__stage">
+                            <p class="case__lead"><span>A multi-company sales system for hardware stores: </span><strong>point of sale, inventory, accounting and AI agents.</strong></p>
+                            <div class="case__folder" data-folder data-label="Hardware store system" data-case="3"></div>
+                            <div class="case__panel" aria-live="polite"></div>
+                        </div>
+                        <ul class="case__parts">
+                            <li data-image="/assets/work/saas-pos.webp" data-thumb="/assets/work/saas-pos-t.webp"><h4>Sales (POS)</h4></li>
+                            <li data-image="/assets/work/saas-agents.webp" data-thumb="/assets/work/saas-agents-t.webp"><h4>AI assistants</h4></li>
+                            <li data-image="/assets/work/saas-ecf.webp" data-thumb="/assets/work/saas-ecf-t.webp"><h4>Electronic invoices</h4></li>
+                            <li data-image="/assets/work/saas-receipt.webp" data-thumb="/assets/work/saas-receipt-t.webp"><h4>Receipt</h4></li>
+                        </ul>
+                        <a class="case__more mono" href="/work/hardware-store-system/">View the case →</a>
+                    </article>
                 </div>
-                <ul class="case__parts">
-                    <li data-image="/assets/work/jalip-home.webp" data-thumb="/assets/work/jalip-home-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html" target="_blank" rel="noopener noreferrer">Home</a></h4></li>
-                    <li data-image="/assets/work/jalip-services.webp" data-thumb="/assets/work/jalip-services-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#servicios" target="_blank" rel="noopener noreferrer">Services</a></h4></li>
-                    <li data-image="/assets/work/jalip-portfolio.webp" data-thumb="/assets/work/jalip-portfolio-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#modificaciones" target="_blank" rel="noopener noreferrer">Portfolio</a></h4></li>
-                    <li data-image="/assets/work/jalip-booking.webp" data-thumb="/assets/work/jalip-booking-t.webp"><h4><a href="https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#mantenimiento" target="_blank" rel="noopener noreferrer">Book maintenance</a></h4></li>
-                </ul>
-                <a class="case__more mono" href="/work/jalip-motorsport/">View the case →</a>
-            </article>
-            <article class="case reveal">
-                <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">LA FAMA</span></h3>
-                <div class="case__stage">
-                    <p class="case__lead"><span>Brand and digital experience for a production company: </span><strong>portfolio, video, artists and booking.</strong></p>
-                    <div class="case__folder" data-folder data-label="La Fama Films" data-case="2"></div>
-                    <div class="case__panel" aria-live="polite"></div>
-                </div>
-                <ul class="case__parts">
-                    <li data-image="/assets/work/fama-home.webp" data-thumb="/assets/work/fama-home-t.webp"><h4><a href="https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html" target="_blank" rel="noopener noreferrer">Home</a></h4></li>
-                    <li data-image="/assets/work/fama-booking.webp" data-thumb="/assets/work/fama-booking-t.webp"><h4><a href="https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html#booking" target="_blank" rel="noopener noreferrer">Book a project</a></h4></li>
-                </ul>
-                <a class="case__more mono" href="/work/la-fama-films/">View the case →</a>
-            </article>
-            <article class="case reveal">
-                <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">HARDWARE</span></h3>
-                <div class="case__stage">
-                    <p class="case__lead"><span>A multi-company sales system for hardware stores: </span><strong>point of sale, inventory, accounting and AI agents.</strong></p>
-                    <div class="case__folder" data-folder data-label="Hardware store system" data-case="3"></div>
-                    <div class="case__panel" aria-live="polite"></div>
-                </div>
-                <ul class="case__parts">
-                    <li data-image="/assets/work/saas-pos.webp" data-thumb="/assets/work/saas-pos-t.webp"><h4>Sales (POS)</h4></li>
-                    <li data-image="/assets/work/saas-agents.webp" data-thumb="/assets/work/saas-agents-t.webp"><h4>AI assistants</h4></li>
-                    <li data-image="/assets/work/saas-ecf.webp" data-thumb="/assets/work/saas-ecf-t.webp"><h4>Electronic invoices</h4></li>
-                    <li data-image="/assets/work/saas-receipt.webp" data-thumb="/assets/work/saas-receipt-t.webp"><h4>Receipt</h4></li>
-                </ul>
-                <a class="case__more mono" href="/work/hardware-store-system/">View the case →</a>
-            </article>
+            </div>
         </section>
 
         <!-- 6. STUDIO -->
