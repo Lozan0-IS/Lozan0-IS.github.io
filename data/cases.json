@@ -1,0 +1,174 @@
+{
+  "site": {
+    "origin": "https://akai.do",
+    "ogImage": "/assets/og-image.png",
+    "homeLastmod": "2026-10-07",
+    "sameInSpanish": [
+      "SECTOR",
+      "Can-Am / UTV"
+    ]
+  },
+  "cases": [
+    {
+      "slug": "jalip-motorsport",
+      "n": 1,
+      "name": "Jalip Motorsport",
+      "word": "JALIP",
+      "folderLabel": "Jalip Motorsport",
+      "kind": "Digital experience",
+      "lead": [
+        "Digital experience for a Can-Am / UTV company: ",
+        "showcase, booking and administration."
+      ],
+      "facts": [
+        [
+          "CLIENT",
+          "Jalip Motorsport"
+        ],
+        [
+          "SECTOR",
+          "Can-Am / UTV"
+        ],
+        [
+          "SERVICES",
+          "Digital experience"
+        ]
+      ],
+      "live": "https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html",
+      "built": [
+        "A showcase home page for the company",
+        "A services page",
+        "A portfolio of the vehicles the company works on",
+        "A maintenance booking page"
+      ],
+      "shots": [
+        {
+          "img": "jalip-home",
+          "label": "Home",
+          "href": "https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html"
+        },
+        {
+          "img": "jalip-services",
+          "label": "Services",
+          "href": "https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#servicios"
+        },
+        {
+          "img": "jalip-portfolio",
+          "label": "Portfolio",
+          "href": "https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#modificaciones"
+        },
+        {
+          "img": "jalip-booking",
+          "label": "Book maintenance",
+          "href": "https://lozan0-is.github.io/jalip-motorsport-web/Jalip%20Motorsport.dc.html#mantenimiento"
+        }
+      ],
+      "shotNote": "Screens from the live site.",
+      "lastmod": "2026-10-08"
+    },
+    {
+      "slug": "la-fama-films",
+      "n": 2,
+      "name": "La Fama Films",
+      "word": "LA FAMA",
+      "folderLabel": "La Fama Films",
+      "kind": "Brand and digital experience",
+      "lead": [
+        "Brand and digital experience for a production company: ",
+        "portfolio, video, artists and booking."
+      ],
+      "facts": [
+        [
+          "CLIENT",
+          "La Fama Films"
+        ],
+        [
+          "SECTOR",
+          "Production company"
+        ],
+        [
+          "SERVICES",
+          "Brand, Digital experience"
+        ]
+      ],
+      "live": "https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html",
+      "built": [
+        "A brand and a digital home for the production company",
+        "Showcase of its portfolio, video and artists",
+        "A booking page for new projects"
+      ],
+      "shots": [
+        {
+          "img": "fama-home",
+          "label": "Home",
+          "href": "https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html"
+        },
+        {
+          "img": "fama-booking",
+          "label": "Book a project",
+          "href": "https://lozan0-is.github.io/lafama-films-web/La%20Fama%20Films.dc.html#booking"
+        }
+      ],
+      "shotNote": "Screens from the live site.",
+      "lastmod": "2026-10-08"
+    },
+    {
+      "slug": "hardware-store-system",
+      "n": 3,
+      "name": "Hardware store system",
+      "word": "HARDWARE",
+      "folderLabel": "Hardware store system",
+      "kind": "Platform, AI and automation",
+      "lead": [
+        "A multi-company sales system for hardware stores: ",
+        "point of sale, inventory, accounting and AI agents."
+      ],
+      "facts": [
+        [
+          "TYPE",
+          "Multi-company SaaS platform"
+        ],
+        [
+          "SERVICES",
+          "Platform, AI & Automation"
+        ],
+        [
+          "ACCESS",
+          "Private, no public link"
+        ]
+      ],
+      "live": null,
+      "built": [
+        "A point of sale with product search, barcode scanning, quotes and held sales",
+        "Inventory, purchasing, cash register, dispatch and delivery routes",
+        "Accounts receivable and payable, expenses and accounting",
+        "Electronic invoice (e-CF) records, credit notes and printed receipts",
+        "Four AI assistants, one each for sales, purchasing, inventory and finance, inside a chat in the system"
+      ],
+      "shots": [
+        {
+          "img": "saas-pos",
+          "label": "Sales (POS)",
+          "href": null
+        },
+        {
+          "img": "saas-agents",
+          "label": "AI assistants",
+          "href": null
+        },
+        {
+          "img": "saas-ecf",
+          "label": "Electronic invoices",
+          "href": null
+        },
+        {
+          "img": "saas-receipt",
+          "label": "Receipt",
+          "href": null
+        }
+      ],
+      "shotNote": "Screens show test data.",
+      "lastmod": "2026-10-08"
+    }
+  ]
+}
