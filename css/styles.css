@@ -8,6 +8,14 @@
 }
 
 @font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/instrument-serif-latin.woff2') format('woff2');
+}
+
+@font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
   font-weight: 400 500;
@@ -26,7 +34,7 @@
 
   --font: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
-  --font-serif: 'Times New Roman', Times, serif;
+  --font-serif: 'Instrument Serif', 'Times New Roman', Times, serif;
 
   --text-display: clamp(4rem, 10vw, 9rem);
   --text-headline: clamp(2.5rem, 6vw, 5rem);
@@ -149,15 +157,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 0.9;
   letter-spacing: -0.05em;
   text-wrap: balance;
-}
-
-.section-index {
-  flex-shrink: 0;
-  padding-bottom: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  letter-spacing: 0.1em;
-  color: var(--ink-secondary);
 }
 
 /* Navigation — no bar. The portal icon sits top-left and the menu top-right.
@@ -390,7 +389,7 @@ body::before {
   font-weight: 400;
   font-size: clamp(2.5rem, 7vw, 7.5rem);
   line-height: 0.95;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.015em;
   transition: opacity 600ms ease;
 }
 
@@ -490,7 +489,7 @@ body::before {
   font-size: clamp(2.5rem, 7.5vw, 8rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.015em;
   color: var(--ink);
 }
 
@@ -678,7 +677,7 @@ body::before {
   font-size: clamp(2.25rem, 5vw, 5rem);
   font-weight: 400;
   line-height: 1.02;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.012em;
   max-width: 1200px;
   margin-bottom: 4rem;
 }
@@ -1637,7 +1636,7 @@ html:has(.talk[open]) { overflow: hidden; }
   align-items: center;
   gap: 0.75rem;
   margin: 0;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
 }
 
 .talk__tag::before {
@@ -1725,7 +1724,7 @@ html:has(.talk[open]) { overflow: hidden; }
   min-height: 44px;
   background: rgba(255, 255, 255, 0.14);
   color: #fff;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   text-decoration: none;
   transition: background 180ms ease;
 }
@@ -1784,6 +1783,46 @@ html:has(.talk[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .talk[open],
   .talk[open]::backdrop { animation: none; }
+}
+
+/* Closing call to action — the one place the accent colour marks the primary action */
+.closing {
+  padding: var(--space-section) clamp(1.5rem, 4vw, 4rem);
+  text-align: center;
+}
+
+.closing__line {
+  max-width: 14ch;
+  margin: 0 auto 2.5rem;
+  /* lower floor than --text-display: "something" at 4rem overflows a 320px screen */
+  font-size: clamp(2.5rem, 11vw, 9rem);
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.closing__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 64px;
+  padding: 0 2.25rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 200ms ease, color 200ms ease, transform 150ms var(--ease-out);
+}
+
+.closing__cta:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.closing__cta:active { transform: scale(0.97); }
+
+@media (hover: hover) and (pointer: fine) {
+  .closing__cta:hover { background: #fff; color: #000; }
 }
 
 /* Credo — a statement, then a headline of letters that can be cut. Pointer-driven, so a reduced-motion visitor just gets the headline. */
@@ -2201,7 +2240,6 @@ html:not(.js) .work__toggle { cursor: default; }
 .work__word { flex: 0 1 auto; }
 
 .work__meta {
-  margin-left: auto;
   font-size: var(--text-meta);
   letter-spacing: 0.1em;
   color: var(--ink-secondary);
@@ -2239,6 +2277,34 @@ html:not(.js) .work__toggle { cursor: default; }
   .work__toggle:hover .work__plus { background: #fff; }
   .work__toggle:hover .work__plus::before,
   .work__toggle:hover .work__plus::after { background: #000; }
+}
+
+.work .section-title { flex: 1; min-width: 0; }
+.work__toggle { flex-wrap: wrap; }
+
+/* One thumbnail per case beside the folded heading: proof is visible before anything is opened */
+.work__peek {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: auto;
+  align-self: center;
+  transition: opacity 250ms ease;
+}
+
+.work__peek img {
+  display: block;
+  width: clamp(6rem, 11vw, 10rem);
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: #1a1b1d;
+}
+
+.work__toggle[aria-expanded="true"] .work__peek { opacity: 0; pointer-events: none; }
+
+@media (max-width: 900px) {
+  .work__peek { flex-basis: 100%; margin: 1.25rem 0 0; }
+  .work__peek img { width: calc((100% - 1.2rem) / 3); }
 }
 
 .work__cases { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 500ms var(--ease-out), visibility 0s; }
@@ -2549,9 +2615,11 @@ html.js .work__cases[data-folded] { grid-template-rows: 0fr; visibility: hidden;
   background: rgba(0, 0, 0, 0.72);
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-align: left;
+  white-space: normal;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 

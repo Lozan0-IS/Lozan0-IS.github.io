@@ -145,6 +145,9 @@ window.AKAI_ES = {
     'Back': 'Volver',
     'Start a project: go to the brief': 'Empezar un proyecto: ir al brief',
 
+    // Closing call to action
+    'Have something worth building?': '¿Tienes algo que valga la pena construir?',
+
     // Credo
     'Everything we do is born inside AKAI.': 'Todo lo que hacemos nace dentro de AKAI.',
     'We combine strategy, creativity and technology to turn ambitious ideas into experiences that are felt, that work and that last.': 'Combinamos estrategia, creatividad y tecnología para transformar ideas ambiciosas en experiencias que se sienten, funcionan y perduran.',

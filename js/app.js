@@ -275,8 +275,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 14a. Connect opens a "let's talk" panel (a modal dialog: Esc, focus trap and focus return come with it). Without JS the link opens the email app ---
     const initTalk = () => {
         const dialog = document.getElementById('talk');
-        const trigger = document.querySelector('.connect');
-        if (!dialog || !trigger || typeof dialog.showModal !== 'function') return;
+        const triggers = document.querySelectorAll('.connect, [data-open-talk]');
+        if (!dialog || !triggers.length || typeof dialog.showModal !== 'function') return;
 
         const cards = dialog.querySelector('.talk__cards');
         const intro = dialog.querySelector('.talk__intro');
@@ -288,11 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
             dialog.scrollTo(0, 0);
         };
 
-        trigger.addEventListener('click', (e) => {
+        triggers.forEach((trigger) => trigger.addEventListener('click', (e) => {
             e.preventDefault();
             open(false);
             dialog.showModal();
-        });
+        }));
         dialog.querySelector('.talk__close').addEventListener('click', () => dialog.close());
         dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
         dialog.querySelector('.talk__go').addEventListener('click', () => {

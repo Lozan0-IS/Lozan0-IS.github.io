@@ -112,7 +112,6 @@
         <section class="disciplines" aria-labelledby="disciplines-title">
             <div class="section-head">
                 <h2 class="section-title" id="disciplines-title">WHAT WE DO</h2>
-                <span class="section-index" aria-hidden="true">/01</span>
             </div>
             <p class="disciplines__intro reveal">We move between disciplines depending on the problem. Most projects need two or three of them; few need all four.</p>
             <ol class="disciplines__list" role="list">
@@ -155,7 +154,6 @@
         <section class="method" aria-labelledby="method-title">
             <div class="section-head">
                 <h2 class="section-title" id="method-title">THE AKAI METHOD</h2>
-                <span class="section-index" aria-hidden="true">/02</span>
             </div>
             <ol class="method__steps" role="list">
                 <li class="method__step reveal">
@@ -193,12 +191,20 @@
                         <span class="work__word">WORK</span>
                         <span class="work__meta mono">3 projects</span>
                         <span class="work__plus" aria-hidden="true"></span>
+                        <!-- peek:start (generated from data/cases.json by tools/build-cases.js) -->
+                        <span class="work__peek" aria-hidden="true">
+                            <img src="/assets/work/jalip-home-t.webp" alt="" width="400" height="250" loading="lazy" decoding="async">
+                            <img src="/assets/work/fama-home-t.webp" alt="" width="400" height="250" loading="lazy" decoding="async">
+                            <img src="/assets/work/saas-pos-t.webp" alt="" width="400" height="250" loading="lazy" decoding="async">
+                        </span>
+                        <!-- peek:end -->
                     </button>
                 </h2>
             </div>
             <!-- Folded by default. Without JS the toggle does nothing, so the folded part is only hidden once app.js has run -->
             <div class="work__cases" id="work-cases">
                 <div class="work__cases-inner">
+                    <!-- cases:start (generated from data/cases.json by tools/build-cases.js; edit the data, not this block) -->
                     <article class="case reveal">
                         <h3 class="case__title"><span class="case__word">CASE</span> <span class="case__client">JALIP</span></h3>
                         <div class="case__stage">
@@ -242,6 +248,7 @@
                         </ul>
                         <a class="case__more mono" href="/work/hardware-store-system/">View the case →</a>
                     </article>
+                    <!-- cases:end -->
                 </div>
             </div>
         </section>
@@ -351,6 +358,14 @@
                     <p class="member__role">AI &amp; Automation</p>
                 </li>
             </ul>
+        </section>
+
+        <!-- 8. CLOSING CTA — the page's one primary action: opens the same panel as Connect -->
+        <section class="closing" aria-labelledby="closing-title">
+            <h2 class="closing__line" id="closing-title">Have something worth building?</h2>
+            <a class="closing__cta" href="mailto:hello@akai.do" data-open-talk>
+                <span>LET'S TALK</span><span aria-hidden="true">→</span>
+            </a>
         </section>
 
     </main>
